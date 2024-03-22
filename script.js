@@ -194,31 +194,30 @@ function days_dropdown(){
     
 }
 
-function displaySightings() {
-    let displayed_colleges = [];
-    const container = document.getElementById("sightings");
-    container.innerHTML = "";
-    let data = allSightings.slice(0, 20);
-    data.forEach((sighting) => {
-        if (sighting.time == currentDay) {
-            if (
-                displayed_colleges.find((element) => element > sighting.college) ==
-                undefined
-            ) {
-                let div = document.createElement("div");
-                div.className = "item";
-                div.innerHTML = `<div class="sighting-location">${sighting.college}</div><div>${sighting.time_exact}</div>`;
-                displayed_colleges.push(sighting.college);
-                const result = colleges.find(({ name }) => name === sighting.college);
 
+function displaySightings() {
+    const container = document.getElementById("sightings");
+    container.innerHTML = ""; // Clear current sightings
+    let displayed_colleges = []; // This will keep track of colleges that have already been displayed
+
+    allSightings.forEach((sighting) => {
+        // No need to check for the day now, we're displaying all sightings
+        if (!displayed_colleges.includes(sighting.college)) {
+            let div = document.createElement("div");
+            div.className = "item";
+            div.innerHTML = `<div class="sighting-location">${sighting.college}</div><div>${sighting.time_exact}</div>`;
+            displayed_colleges.push(sighting.college); // Add college to the list of displayed colleges
+
+            const result = colleges.find(({ name }) => name === sighting.college);
+            if (result) {
                 let marker = new google.maps.Marker({
                     position: { lat: result.lat, lng: result.lng },
                     map: forecastMap,
                     title: result.name,
                 });
-
-                container.appendChild(div);
             }
+
+            container.appendChild(div); // Append the new div to the sightings container
         }
     });
     if(displayed_colleges.length==0){
@@ -236,18 +235,7 @@ function toggleSightings() {
         ? "Show less"
         : "Show more";
 }
-function changeDay(day) {
-    document.getElementById(currentDay).style.backgroundColor = "white";
-    currentDay = day;
-    document.getElementById(day).style.backgroundColor = "#3797F0";
-    document.getElementById("now_show").innerHTML=currentDay;
-    forecastMap = new google.maps.Map(document.getElementById("forecastMap"), {
-        zoom: 15.5,
-        center: new google.maps.LatLng(36.995412, -122.060783),
-    });
 
-    displaySightings();
-}
 function fetchSightings() {
     
     db.collection("sightings")
