@@ -1,0 +1,256 @@
+p {
+  margin-bottom: -1em;
+  margin-top: 0em;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  height: 10%;
+}
+.fit_width {
+  width: 100%;
+}
+.title {
+  font-family: "Fugaz One";
+  display: flex;
+  justify-content: center;
+  margin: 23px;
+  color: white;
+  text-shadow: 4px 4px 10px #00000070
+}
+
+.btn-std {
+  width: 150px;
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(7, 62, 111, 1),
+    rgba(7, 76, 138, 0.93)
+  );
+  color: white;
+  height: auto;
+  width: auto;
+  padding: 5px;
+  margin: 0px 20px 0px 20px;
+  border-radius: px;
+}
+.half_width {
+  width: 50%;
+}
+.content {
+  
+  width: 100%;
+  border-radius: 50px 50px 0px 0px;
+  height: 200%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.gradient {
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(12, 88, 154),
+    rgb(5 36 85)
+  );
+}
+
+
+
+
+.section{
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+}
+.big{
+  width: 60%;
+}
+.small{
+  width: 30%;
+}
+.inner-content {
+  font-family: 'Bellota Text';
+  margin: 5px;
+  background-color: white;
+  border-radius: 30px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  
+  box-shadow: 8px 8px 30px #00000070;
+}
+#title {
+  border: 2px solid lightblue;
+  width: fit-content;
+  padding: 5px;
+  border-radius: 0px;
+  margin-top: 10px;
+}
+
+
+
+#report {
+  margin-top: 20px;
+  width: 80%;
+  text-align: center;
+}
+
+button {
+  margin-top: 20px;
+  width: 50%;
+  height: 40px;
+  font-size: 16px;
+}
+
+.sighting {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.sighting-location {
+
+}
+
+
+.map{
+  border: 2px solid lightblue;
+  width: 80%;
+  aspect-ratio: 1/1;
+  margin: 0px auto;
+  
+}
+.blk{
+  color: black;
+}
+
+.footer{
+  width: 80%;
+  height: 230px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  padding-bottom: 60px;
+
+}
+
+
+.footer img{
+  width: 70px;
+}
+.footer-item{
+  display: flex;
+  flex-direction: column;
+  color: white;
+  align-items: center;
+}
+
+.main{
+  background-color: #EDEDED;
+  
+  width: 100%;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.bold{
+  font-weight:bold;
+}
+.topper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 20px 0px 20px 0px;
+}
+.drop{
+  position: relative;
+  top:-30px;
+  padding-top:35px;
+  padding-bottom: 5px;
+  background-color: #F8F8F8;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0px 0px 10px 10px;
+
+}
+.day{
+  width: 40%;
+  background-color: white;
+  border-radius: 12px;
+  margin: 5px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.drop_wrapper{
+  width: 100%;
+}
+.row{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.dropmenu{
+  flex-direction: column;
+  width: 90%;
+
+}
+.item{
+  margin:6px;
+  width: 85%;
+  background-color: white;
+  border-radius: 10px;
+  padding:15px;
+}
+
+.flex{
+  display: flex;
+}
+
+
+@media only screen and (max-width: 1000px) {
+  .section{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
+  .big{
+    width: 90%;
+  }
+  .small{
+    width: 90%;
+  }
+  .topper {
+    margin: 40px 0px 40px 0px;
+  }
+  .content {
+    font-size: 35px;
+  }
+}

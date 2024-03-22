@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taps Tracker</title>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD27CKLddswkn-DTg6anVo8BaRWUZJrHao&callback=initMap" async defer></script>
+</head>
+<body>
+    <h1><center>Taps Tracker</h1>
+    <div id="map" style="height: 500px; width: 100%; margin-bottom: 20px;"></div>
+    <ul id="citationsList"></ul>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAgYdoZnSv5ekxngv_ue61aFZUGcRlphok",
+            authDomain: "defundtaps.firebaseapp.com",
+            projectId: "defundtaps",
+            storageBucket: "defundtaps.appspot.com",
+            messagingSenderId: "456064481827",
+            appId: "1:456064481827:web:4a4b37035fbfbd534ccf96",
+            measurementId: "G-4ZX480FN46"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = app.firestore();
+
+        let map;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 36.9914, lng: -122.0609 },
+                zoom: 14
+            });
+            fetchRecentCitations();
+        }
+
+        var colleges = [
+           	{name: "152 CROWN - MERRILL APARTMENTS", lat: 7.002128, lng: -122.053512 },
+	{name: "154 CROWN - MERRILL APARTMENTS", lat: 37.002163, lng: -122.054817 },
+	{name: "111B CROWN COLLEGE CIRCLE", lat: 37.001089, lng: -122.054401 },
+	{name: "111A CROWN COLLEGE CIRCLE", lat: 37.000628, lng: -122.054770 },
+	{ name: "MERRILL COLLEGE APTS", lat: 36.999681, lng: -122.051747 },
+	{ name: "CROWN SERVICE ROAD", lat: 37.000602, lng: -122.054672 },
+	{ name: "FARM CASFS", lat: 36.985346, lng: -122.055503 },
+	{ name: "168 AGROECOLOGY", lat: 36.985335, lng: -122.055504},
+	{ name: "169 AGROECOLOGY", lat: 36.986809, lng: -122.055375 },
+	{name: "170 HAY BARN", lat: 36.981037, lng: -122.054451 },
+	{name: "105 UNIVERSITY POLICE", lat: 36.979614, lng: -122.052061 },
+	{name: "116 CAMPUS FACILITIES", lat: 36.980995, lng: -122.051875 },
+        ];
+
+        function getLatLngForCollege(collegeName) {
+            for (let college of colleges) {
+                if (college.name === collegeName) {
+                    return { lat: college.lat, lng: college.lng };
+                }
+            }
+            return null;
+        }
+
+        function formatTime(timeStr) {
+            if (!timeStr) return "";
+            const hour = parseInt(timeStr.slice(0, 2), 10);
+            const minute = parseInt(timeStr.slice(2, 4), 10);
+            const isPM = hour >= 12;
+            return `${(hour % 12) || 12}:${minute.toString().padStart(2, '0')} ${isPM ? 'PM' : 'AM'}`;
+        }
+
+        function getOpacityBasedOnAge(timestamp) {
+            const now = new Date();
+            const citationDate = new Date(timestamp);
+            const diffTime = Math.abs(now - citationDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            if (diffDays > 7) return 0;
+            return (7 - diffDays) / 7;
+        }
+
+        async function fetchRecentCitations() {
+            const citationsList = document.getElementById("citationsList");
+            const querySnapshot = await db.collection("citations").orderBy("timestamp", "desc").limit(100).get();
+            
+            querySnapshot.forEach(doc => {
+                const data = doc.data();
+                const formattedTime = formatTime(data.time);
+                const listItem = document.createElement("li");
+                listItem.textContent = `Citation Number: ${doc.id} | College: ${data.college} | Timestamp: ${data.timestamp} ${formattedTime}`;
+                citationsList.appendChild(listItem);
+                
+                const location = getLatLngForCollege(data.college);
+                const opacity = getOpacityBasedOnAge(data.timestamp);
+                if (location && opacity > 0) {
+                    new google.maps.Marker({
+                        position: location,
+                        map: map,
+                        title: `Citation Number: ${doc.id}`,
+                        opacity: opacity
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

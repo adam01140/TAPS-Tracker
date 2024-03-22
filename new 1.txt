@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Citation Data</title>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD27CKLddswkn-DTg6anVo8BaRWUZJrHao&callback=initMap" async defer></script>
+</head>
+<body>
+    <h1>Recent 50 Citations</h1>
+    <div id="map" style="height: 500px; width: 100%; margin-bottom: 20px;"></div>
+    <ul id="citationsList"></ul>
+    <script>
+	
+	
+	
+
+
+
+
+
+	
+	
+        var firebaseConfig = {
+            apiKey: "AIzaSyAgYdoZnSv5ekxngv_ue61aFZUGcRlphok",
+  authDomain: "defundtaps.firebaseapp.com",
+  projectId: "defundtaps",
+  storageBucket: "defundtaps.appspot.com",
+  messagingSenderId: "456064481827",
+  appId: "1:456064481827:web:4a4b37035fbfbd534ccf96",
+  measurementId: "G-4ZX480FN46",
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = app.firestore();
+
+        let map;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 36.9914, lng: -122.0609 },
+                zoom: 14
+            });
+            fetchRecentCitations();
+        }
+
+        var colleges = [
+            
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+	{name: "152 CROWN - MERRILL APARTMENTS ", lat: 7.002128, lng: -122.053512 },
+    { name: "127 WEST REMOTE", lat: 36.98855, lng: -122.065901 },
+    { name: "146 RACHEL CARSON COLLEGE", lat: 36.992282, lng: -122.064506 },
+    { name: "164 JOHN R. LEWIS COLLEGE", lat: 37.000826, lng: -122.059137 },
+    
+	
+        ];
+
+        function getLatLngForCollege(collegeName) {
+            for (let college of colleges) {
+                if (college.name === collegeName) {
+                    return { lat: college.lat, lng: college.lng };
+                }
+            }
+            return null;
+        }
+
+        async function fetchRecentCitations() {
+            const citationsList = document.getElementById("citationsList");
+            const querySnapshot = await db.collection("citations").orderBy("timestamp", "desc").limit(30).get();
+            
+            querySnapshot.forEach(doc => {
+                const data = doc.data();
+                const listItem = document.createElement("li");
+                listItem.textContent = `Citation Number: ${doc.id} | College: ${data.college} | Timestamp: ${data.timestamp}`;
+                citationsList.appendChild(listItem);
+                
+                const location = getLatLngForCollege(data.college);
+                if (location) {
+                    new google.maps.Marker({
+                        position: location,
+                        map: map,
+                        title: `Citation Number: ${doc.id}`
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

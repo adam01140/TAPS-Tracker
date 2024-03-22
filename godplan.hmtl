@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #title {
+            border: 2px solid lightblue;
+            width: fit-content;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        #sightings {
+            margin-top: 0px;
+            width: 80%;
+        }
+
+        #report {
+            margin-top: 20px;
+            width: 80%;
+            text-align: center;
+        }
+
+        select,
+        button {
+            margin-top: 20px;
+            width: 100%;
+            height: 40px;
+            font-size: 16px;
+        }
+
+        .sighting {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+    <div id="title">
+        <h1><b>TAPS Tracker</b></h1>
+    </div>
+    <br>
+    <h2>Recent Sightings</h2>
+    <div id="sightings"></div>
+    <div id="report">
+        <h2>Report A Sighting</h2>
+        <select id="collegeSelect">
+            <option value="cowell">Cowell</option>
+            <option value="stevenson">Stevenson</option>
+            <option value="merril">Merril</option>
+            <option value="porter">Porter</option>
+            <option value="rachel carson">Rachel Carson</option>
+            <option value="kresge">Kresge</option>
+            <option value="oakes">Oakes</option>
+            <option value="college 9">College 9</option>
+            <option value="college 10">College 10</option>
+        </select>
+        <button onclick="reportSighting()">Report</button>
+    </div>
+    <div id="venmo">
+        <center>
+            <h2>Fund the project</h2>
+            <img src="https://i.ibb.co/t42P1W6/qr-code.png" alt="QR Code" style="width:200px;">
+            <p>or</p>
+            <p>@Taps-Tracker</p>
+        </center>
+    </div>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAgYdoZnSv5ekxngv_ue61aFZUGcRlphok",
+            authDomain: "defundtaps.firebaseapp.com",
+            projectId: "defundtaps",
+            storageBucket: "defundtaps.appspot.com",
+            messagingSenderId: "456064481827",
+            appId: "1:456064481827:web:4a4b37035fbfbd534ccf96",
+            measurementId: "G-4ZX480FN46"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        async function init() {
+            const userCredential = await firebase.auth().signInAnonymously();
+        }
+        init();
+
+        var db = firebase.firestore();
+        
+        let allSightings = [];
+        let showingAll = false;
+
+        window.reportSighting = async function() {
+            var college = document.getElementById("collegeSelect").value;
+            var time = new Date().toLocaleString();
+            const userId = firebase.auth().currentUser.uid;
+            
+            const userRef = db.collection('userReports').doc(userId);
+            const doc = await userRef.get();
+
+            if (!doc.exists) {
+                await userRef.set({count: 1});
+            } else if (doc.data().count < 5) {
+                await userRef.update({count: firebase.firestore.FieldValue.increment(1)});
+            } else {
+                alert('You have reported too many times!');
+                return;
+            }
+
+            try {
+                await db.collection('sightings').add({
+                    uid: userId,
+                    college: college,
+                    time: time,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                allSightings.unshift({college: college, time: time});
+                displaySightings();
+            } catch (error) {
+                alert('Error reporting sighting. Make sure you haven\'t exceeded the report limit.');
+            }
+        }
+
+        function displaySightings() {
+            const sightingsContainer = document.getElementById("sightings");
+            sightingsContainer.innerHTML = "";
+            const sightingsToShow = showingAll ? allSightings : allSightings.slice(0, 5);
+            sightingsToShow.forEach(sighting => {
+                var sightingDiv = document.createElement("div");
+                sightingDiv.className = "sighting";
+                sightingDiv.innerHTML = "<strong>" + sighting.college + "</strong><br>" + sighting.time;
+                sightingsContainer.appendChild(sightingDiv);
+            });
+            if (allSightings.length > 5) {
+                var toggleButton = document.createElement("button");
+                toggleButton.innerText = showingAll ? "Show Less" : "Show More";
+                toggleButton.onclick = function() {
+                    showingAll = !showingAll;
+                    displaySightings();
+                };
+                sightingsContainer.appendChild(toggleButton);
+            }
+        }
+
+        window.onload = async function() {
+            const querySnapshot = await db.collection('sightings').orderBy('timestamp', 'desc').get();
+            querySnapshot.forEach((doc) => {
+                let sighting = doc.data();
+                sighting.time = sighting.time || sighting.timestamp.toDate().toLocaleString();
+                allSightings.push(sighting);
+            });
+            displaySightings();
+        }
+    </script>
+</body>
+
+</html>
