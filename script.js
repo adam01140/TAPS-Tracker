@@ -28,8 +28,8 @@ var days = [
 ];
 const now = new Date();
 let currentDay = days[now.getDay()];
-document.getElementById(currentDay).style.backgroundColor = "#3797F0";
-document.getElementById("now_show").innerHTML=currentDay;
+//document.getElementById(currentDay).style.backgroundColor = "#3797F0";
+//document.getElementById("now_show").innerHTML=currentDay;
 var map;
 let dropped = false;
 var forecastMap;
@@ -184,6 +184,8 @@ function reportSighting(collegeName, markerPosition) {
 }
 
 function days_dropdown(){
+	
+	/*
     let elem = document.getElementById("days_show");
     if(dropped){
         elem.style.display = "none";
@@ -191,6 +193,8 @@ function days_dropdown(){
         elem.style.display = "block";
     }
     dropped = !dropped;
+	
+	*/
     
 }
 
