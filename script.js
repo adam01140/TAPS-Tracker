@@ -1,13 +1,18 @@
+
+
 var firebaseConfig = {
-    apiKey: "AIzaSyCGqa-UqWc1piwR6dcdi_2GFH_59JCqUbc",
-    authDomain: "fucktaps-5b81b.firebaseapp.com",
-    projectId: "fucktaps-5b81b",
-    storageBucket: "fucktaps-5b81b.appspot.com",
-    messagingSenderId: "493483922119",
-    appId: "1:493483922119:web:6964c571b3f37d311e24e2",
-    measurementId: "G-QLJX7LFVBB",
-};
-firebase.initializeApp(firebaseConfig);
+            apiKey: "AIzaSyCGqa-UqWc1piwR6dcdi_2GFH_59JCqUbc",
+  authDomain: "fucktaps-5b81b.firebaseapp.com",
+  projectId: "fucktaps-5b81b",
+  storageBucket: "fucktaps-5b81b.appspot.com",
+  messagingSenderId: "493483922119",
+  appId: "1:493483922119:web:6964c571b3f37d311e24e2",
+  measurementId: "G-QLJX7LFVBB"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+
+
 
 async function init() {
     const userCredential = await firebase.auth().signInAnonymously();
@@ -26,6 +31,11 @@ var days = [
     "Friday",
     "Saturday",
 ];
+
+
+
+
+
 const now = new Date();
 let currentDay = days[now.getDay()];
 //document.getElementById(currentDay).style.backgroundColor = "#3797F0";

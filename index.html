@@ -1,82 +1,154 @@
 <!DOCTYPE html>
+
+
+
 <html>
-<head>
+  <head>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="stylebutton.css" />
-    <link href="https://fonts.googleapis.com/css?family=Bellota Text" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Fugaz One" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Bellota Text"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Fugaz One"
+      rel="stylesheet"
+    />
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+	
+	
+	
+	<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD27CKLddswkn-DTg6anVo8BaRWUZJrHao&callback=initMap" async defer></script>
-</head>
-<body>
+	
+	
+	
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD27CKLddswkn-DTg6anVo8BaRWUZJrHao&callback=initMap"
+      async
+      defer
+    ></script>
+  </head>
+
+  <body>
     <div class="header center">
-        <div class="half_width">
-            <img src="logo.png" class="fit_width" alt="logo taps ucsc tracker" />
-        </div>
+      <div class="half_width">
+        <img src="logo.png" class="fit_width" alt="logo taps ucsc tracker" />
+      </div>
     </div>
 
     <div class="content gradient">
-        <h1 class="title">FORECAST</h1>
-        <div class="section">
-            <div class="inner-content small">
-                <button id="manualReportButton">Manual Report</button>
-                <div class="signtings" id="sightings"></div>
-            </div>
-            <div class="inner-content big">
-                <div id="forecastMap" class="map"></div>
-            </div>
-        </div>
+      <h1 class="title">FORECAST</h1>
 
-        <h1 class="title">REPORT</h1>
-        <div class="section">
-            <div class="inner-content small">
-                <div class="dropmenu">
-                    <div class="main flex" id="topper" onclick="currentLocation()">
-                        <div class="topper">
-                            <div>Report A Sighting</div>
-                        </div>
-                    </div>
-                    <div class="drop flex" id="locations"></div>
-                    <div id="hello"></div>
+      <div class="section">
+        <div class="inner-content small">
+          <div class="dropmenu">
+            <div class="main flex" id="topper" onclick="days_dropdown()">
+              <div class="topper">
+                <div>All Sightings:</div>
+                <div id="now_show" class=""></div>
+              </div>
+              <div class="drop_wrapper" id="days_show" style="display: none">
+                <div class="row">
+                  <div class="day" id="Monday" onclick="changeDay('Monday')">
+                    Monday
+                  </div>
+                  <div class="day" id="Tuesday" onclick="changeDay('Tuesday')">
+                    Tuesday
+                  </div>
                 </div>
-            </div>
-            <div class="inner-content big">
-                <div class="topper">
-                    <div>Select A Location On The Map To Report It</div>
+                <div class="row">
+                  <div
+                    class="day"
+                    id="Wednesday"
+                    onclick="changeDay('Wednesday')"
+                  >
+                    Wednesday
+                  </div>
+                  <div
+                    class="day"
+                    id="Thursday"
+                    onclick="changeDay('Thursday')"
+                  >
+                    Thursday
+                  </div>
                 </div>
-                <div id="map" class="map"></div>
+                <div class="row">
+                  <div class="day" id="Friday" onclick="changeDay('Friday')">
+                    Friday
+                  </div>
+                  <div
+                    class="day"
+                    id="Saturday"
+                    onclick="changeDay('Saturday')"
+                  >
+                    Saturday
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="day" id="Sunday" onclick="changeDay('Sunday')">
+                    Sunday
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
+            <div class="drop flex" id="sightings"></div>
+          </div>
 
-        <div class="footer">
-            <a href="https://github.com/Adam01140114/TapsTracker"><img src="github.jpeg" alt=""/></a>
-            <a href="https://i.ibb.co/t42P1W6/qr-code.png"><img src="venmo.png" alt=""/></a>
-            <a href="https://forms.gle/cvdz4TtYh6t3P36m6"><img src="forms.png" alt=""/></a>
+          <div class="signtings" id="sightings"></div>
         </div>
-    </div>
+        <div class="inner-content big">
+          <div id="forecastMap" class="map"></div>
+        </div>
+      </div>
 
-    <div id="manualReportForm" style="display:none;">
-        <div>
-            <label for="citationNumber">Citation Number:</label>
-            <input type="text" id="citationNumber" name="citationNumber">
+      <h1 class="title">REPORT</h1>
+      <div class="section">
+        <div class="inner-content small">
+            <div class="dropmenu">
+                <div class="main flex" id="topper" onclick="currentLocation()">
+                  <div class="topper">
+                    <div>Report A Sighting</div>
+                  </div>
+                </div>
+				
+				
+                <div class="drop flex" id="locations">  </div>
+				<div id="hello"></div>
+              </div>
         </div>
-        <div>
-            <label for="citationTime">Time of Citation:</label>
-            <input type="text" id="citationTime" name="citationTime">
+        <div class="inner-content big">
+            <div class="topper">
+              <div>Select A Location On The Map To Report It</div>
+            </div>
+            <div id="map" class="map"></div>
         </div>
-        <div>
-            <label for="citationLocation">Location of Citation:</label>
-            <input type="text" id="citationLocation" name="citationLocation">
-        </div>
-        <div>
-            <label for="licensePlate">License Plate Number:</label>
-            <input type="text" id="licensePlate" name="licensePlate">
-        </div>
-        <button onclick="submitCitation()">Submit</button>
-        <button onclick="closeForm()">Close</button>
+      </div>
+      
+
+      <div class="footer">
+        <a href="https://github.com/Adam01140114/TapsTracker"
+          ><img src="github.jpeg" alt=""
+        /></a>
+
+        <a href="https://i.ibb.co/t42P1W6/qr-code.png"
+          ><img src="venmo.png" alt=""
+        /></a>
+
+        <a href="https://forms.gle/cvdz4TtYh6t3P36m6"
+          ><img src="forms.png" alt=""
+        /></a>
+      </div>
     </div>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
+
+
+
+
+
