@@ -26,11 +26,6 @@ var days = [
     "Friday",
     "Saturday",
 ];
-
-
-
-
-
 const now = new Date();
 let currentDay = days[now.getDay()];
 //document.getElementById(currentDay).style.backgroundColor = "#3797F0";
@@ -173,8 +168,6 @@ function handleLocationError(browserHasGeolocation, pos) {
     map.setCenter(pos);
 }
 
-
-/*
 function reportSighting(collegeName, markerPosition) {
     const confirmation = window.confirm(
         `Do you want to report a TAPS sighting at ${collegeName}?`
@@ -189,52 +182,6 @@ function reportSighting(collegeName, markerPosition) {
         fetchSightings();
     }
 }
-*/
-
-
-
-function reportSighting(collegeName) {
-    // Store collegeName globally or in a way that submitCitation can access
-    window.currentCollege = collegeName;
-
-    // Show the form for entering the citation date and time
-    document.getElementById('citationDateTimeForm').style.display = 'block';
-}
-
-function submitCitation() {
-    // Retrieve input values
-    const year = document.getElementById('year').value;
-    const month = document.getElementById('month').value - 1; // JS months are 0-indexed
-    const day = document.getElementById('day').value;
-    const hour = document.getElementById('hour').value;
-    const minute = document.getElementById('minute').value;
-    
-    // Create a Date object
-    const citationDate = new Date(year, month, day, hour, minute);
-    
-    // Proceed with Firebase submission if date is valid
-    if (!isNaN(citationDate.getTime())) {
-        const userId = firebase.auth().currentUser.uid;
-        db.collection("sightings").add({
-            uid: userId,
-            college: window.currentCollege,
-            timestamp: firebase.firestore.Timestamp.fromDate(citationDate),
-        })
-        .then(() => {
-            alert("Citation reported successfully!");
-            // Hide the form and clear input fields as necessary
-            document.getElementById('citationDateTimeForm').style.display = 'none';
-        })
-        .catch(error => {
-            console.error("Error reporting citation: ", error);
-            alert("Failed to report citation.");
-        });
-    } else {
-        alert("Please enter a valid date and time.");
-    }
-}
-
-
 
 function days_dropdown(){
 	
