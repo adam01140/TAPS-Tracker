@@ -121,18 +121,24 @@
             <div class="topper">
               <div>Select A Location On The Map To Report It</div>
             </div>
+			
             <div id="map" class="map"></div>
-        </div>
-      </div>
-	  
-	  <div id="citationDateTimeForm" style="display: none;">
+			<br><br>
+			<div id="citationDateTimeForm" style="display: none;">
     <input type="number" id="year" placeholder="Year (YYYY)" min="2000" max="2099">
     <input type="number" id="month" placeholder="Month (MM)" min="1" max="12">
     <input type="number" id="day" placeholder="Day (DD)" min="1" max="31">
     <input type="number" id="hour" placeholder="Hour (HH, 24hr)" min="0" max="23">
     <input type="number" id="minute" placeholder="Minute (MM)" min="0" max="59">
+	<br>
+	<input type="text" id="citationNumber" placeholder="Citation Number (Optional)">
+
     <button onclick="submitCitation()">Submit Citation</button>
 </div>
+        </div>
+      </div>
+	  
+	  
 
       
 
@@ -176,6 +182,20 @@ async function init() {
 init();
 
 var db = firebase.firestore();
+
+
+firebase.auth().signInAnonymously()
+  .then(() => {
+    // Authentication succeeded
+    console.log("Signed in anonymously");
+    fetchSightings(); // Now it's safe to fetch data
+  })
+  .catch((error) => {
+    console.error("Error signing in anonymously:", error);
+  });
+  
+  
+  
 let allSightings = [];
 let showingAll = false;
 var days = [
@@ -369,28 +389,30 @@ function reportSighting(collegeName) {
 
 
 function submitCitation() {
-    // Retrieve input values
+    // Retrieve input values, including citation number
     const year = document.getElementById('year').value;
     const month = document.getElementById('month').value - 1; // JS months are 0-indexed
     const day = document.getElementById('day').value;
     const hour = document.getElementById('hour').value;
     const minute = document.getElementById('minute').value;
+    const citationNumber = document.getElementById('citationNumber').value || "Unavailable";
     
     // Create a Date object
     const citationDate = new Date(year, month, day, hour, minute);
     
-    // Proceed with Firebase submission if date is valid
+    // Check if date is valid
     if (!isNaN(citationDate.getTime())) {
         const userId = firebase.auth().currentUser.uid;
         db.collection("sightings").add({
             uid: userId,
             college: window.currentCollege,
             timestamp: firebase.firestore.Timestamp.fromDate(citationDate),
+            citationNumber: citationNumber, // Include citation number in Firestore document
         })
         .then(() => {
             alert("Citation reported successfully!");
-            // Hide the form and clear input fields as necessary
             document.getElementById('citationDateTimeForm').style.display = 'none';
+            // Optionally, clear the form fields here
         })
         .catch(error => {
             console.error("Error reporting citation: ", error);
@@ -400,6 +422,7 @@ function submitCitation() {
         alert("Please enter a valid date and time.");
     }
 }
+
 
 
 
@@ -421,38 +444,9 @@ function days_dropdown(){
 
 
 
-function displaySightings() {
-    const container = document.getElementById("sightings");
-    container.innerHTML = ""; // Clear current sightings
-    let displayed_colleges = []; // This will keep track of colleges that have already been displayed
 
-    allSightings.forEach((sighting) => {
-        // No need to check for the day now, we're displaying all sightings
-        if (!displayed_colleges.includes(sighting.college)) {
-            let div = document.createElement("div");
-            div.className = "item";
-            div.innerHTML = `<div class="sighting-location">${sighting.college}</div><div>${sighting.time_exact}</div>`;
-            displayed_colleges.push(sighting.college); // Add college to the list of displayed colleges
 
-            const result = colleges.find(({ name }) => name === sighting.college);
-            if (result) {
-                let marker = new google.maps.Marker({
-                    position: { lat: result.lat, lng: result.lng },
-                    map: forecastMap,
-                    title: result.name,
-                });
-            }
 
-            container.appendChild(div); // Append the new div to the sightings container
-        }
-    });
-    if(displayed_colleges.length==0){
-        let div = document.createElement("div");
-        div.className = "item";
-        div.innerHTML = `<div class="sighting-location">No Data Avalible</div>`;
-        container.appendChild(div);
-    }
-}
 
 function toggleSightings() {
     showingAll = !showingAll;
@@ -463,25 +457,77 @@ function toggleSightings() {
 }
 
 function fetchSightings() {
-    
+    console.log("Fetching sightings...");
     db.collection("sightings")
         .orderBy("timestamp", "desc")
         .onSnapshot((querySnapshot) => {
-            allSightings = [];
+            console.log(`Received ${querySnapshot.size} sightings`);
+            allSightings = []; // Clear the existing sightings
+
             querySnapshot.forEach((doc) => {
                 const sightingData = doc.data();
-                if (sightingData.timestamp) {
-                    const time = sightingData.timestamp.toDate();
-                    allSightings.push({
-                        college: sightingData.college,
-                        time: days[time.getDay()],
-                        time_exact: time.toLocaleString(),
-                    });
-                }
+                const time = sightingData.timestamp ? sightingData.timestamp.toDate() : new Date();
+                const formattedTime = time.toLocaleString();
+                const citationNumber = sightingData.citationNumber || "Unavailable";
+
+                // Add the sighting data to the allSightings array
+                allSightings.push({
+                    college: sightingData.college,
+                    time_exact: formattedTime,
+                    citationNumber: citationNumber,
+                });
             });
+
+            // Call the function to update the UI with the new sightings data
             displaySightings();
+        }, (error) => {
+            console.error("Error fetching sightings:", error);
         });
 }
+
+// Global variable to keep track of markers
+var sightingMarkers = [];
+
+function displaySightings() {
+    const container = document.getElementById("sightings");
+    container.innerHTML = ""; // Clear the container for new data
+
+    // Clear existing markers from the map
+    sightingMarkers.forEach(marker => marker.setMap(null));
+    sightingMarkers = []; // Reset the array
+
+    if (allSightings.length === 0) {
+        container.innerHTML = '<div class="item">No Data Available</div>';
+        return;
+    }
+
+    // Iterate over all sightings to update the list and the map
+    allSightings.forEach(sighting => {
+        let div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `
+            <div class="sighting-location">${sighting.college}</div>
+            <div>${sighting.time_exact}</div>
+            <div>Citation #: ${sighting.citationNumber}</div>
+        `;
+        container.appendChild(div);
+
+        // Find the corresponding college from the colleges array
+        const college = colleges.find(college => college.name === sighting.college);
+        if (college) {
+            const marker = new google.maps.Marker({
+                position: { lat: college.lat, lng: college.lng },
+                map: forecastMap,
+                title: `${sighting.college}: Citation #${sighting.citationNumber}`
+            });
+            sightingMarkers.push(marker); // Add the new marker to the array
+        }
+    });
+}
+
+
+
+
 function rad(x) {return x*Math.PI/180;}
 
 function findNearby(position){
