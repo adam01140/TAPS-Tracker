@@ -132,6 +132,9 @@
     <input type="number" id="minute" placeholder="Minute (MM)" min="0" max="59">
 	<br>
 	<input type="text" id="citationNumber" placeholder="Citation Number (Optional)">
+	<br>
+	<input type="text" id="licensePlate" placeholder="License Plate (Optional)">
+
 
     <button onclick="submitCitation()">Submit Citation</button>
 </div>
@@ -389,30 +392,29 @@ function reportSighting(collegeName) {
 
 
 function submitCitation() {
-    // Retrieve input values, including citation number
     const year = document.getElementById('year').value;
-    const month = document.getElementById('month').value - 1; // JS months are 0-indexed
+    const month = document.getElementById('month').value - 1;
     const day = document.getElementById('day').value;
     const hour = document.getElementById('hour').value;
     const minute = document.getElementById('minute').value;
     const citationNumber = document.getElementById('citationNumber').value || "Unavailable";
-    
-    // Create a Date object
+    const licensePlate = document.getElementById('licensePlate').value || "Unavailable";
+
     const citationDate = new Date(year, month, day, hour, minute);
-    
-    // Check if date is valid
+
     if (!isNaN(citationDate.getTime())) {
         const userId = firebase.auth().currentUser.uid;
         db.collection("sightings").add({
             uid: userId,
             college: window.currentCollege,
             timestamp: firebase.firestore.Timestamp.fromDate(citationDate),
-            citationNumber: citationNumber, // Include citation number in Firestore document
+            citationNumber: citationNumber,
+            licensePlate: licensePlate,
         })
         .then(() => {
             alert("Citation reported successfully!");
             document.getElementById('citationDateTimeForm').style.display = 'none';
-            // Optionally, clear the form fields here
+            // Optionally, reset form fields here
         })
         .catch(error => {
             console.error("Error reporting citation: ", error);
@@ -422,6 +424,7 @@ function submitCitation() {
         alert("Please enter a valid date and time.");
     }
 }
+
 
 
 
@@ -490,18 +493,16 @@ var sightingMarkers = [];
 
 function displaySightings() {
     const container = document.getElementById("sightings");
-    container.innerHTML = ""; // Clear the container for new data
+    container.innerHTML = ""; // Clear the container
 
-    // Clear existing markers from the map
     sightingMarkers.forEach(marker => marker.setMap(null));
-    sightingMarkers = []; // Reset the array
+    sightingMarkers = []; // Reset the marker array
 
     if (allSightings.length === 0) {
         container.innerHTML = '<div class="item">No Data Available</div>';
         return;
     }
 
-    // Iterate over all sightings to update the list and the map
     allSightings.forEach(sighting => {
         let div = document.createElement("div");
         div.className = "item";
@@ -509,21 +510,22 @@ function displaySightings() {
             <div class="sighting-location">${sighting.college}</div>
             <div>${sighting.time_exact}</div>
             <div>Citation #: ${sighting.citationNumber}</div>
+            <div>License Plate: ${sighting.licensePlate}</div>
         `;
         container.appendChild(div);
 
-        // Find the corresponding college from the colleges array
         const college = colleges.find(college => college.name === sighting.college);
         if (college) {
             const marker = new google.maps.Marker({
                 position: { lat: college.lat, lng: college.lng },
                 map: forecastMap,
-                title: `${sighting.college}: Citation #${sighting.citationNumber}`
+                title: `${sighting.college}: Citation #${sighting.citationNumber}, License Plate: ${sighting.licensePlate}`
             });
-            sightingMarkers.push(marker); // Add the new marker to the array
+            sightingMarkers.push(marker);
         }
     });
 }
+
 
 
 
