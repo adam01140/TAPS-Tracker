@@ -465,19 +465,21 @@ function fetchSightings() {
         .orderBy("timestamp", "desc")
         .onSnapshot((querySnapshot) => {
             console.log(`Received ${querySnapshot.size} sightings`);
-            allSightings = []; // Clear the existing sightings
+            allSightings = []; // Clear the existing sightings array
 
             querySnapshot.forEach((doc) => {
                 const sightingData = doc.data();
                 const time = sightingData.timestamp ? sightingData.timestamp.toDate() : new Date();
                 const formattedTime = time.toLocaleString();
                 const citationNumber = sightingData.citationNumber || "Unavailable";
+                const licensePlate = sightingData.licensePlate || "Unavailable";
 
-                // Add the sighting data to the allSightings array
+                // Add the sighting data, including the license plate, to the allSightings array
                 allSightings.push({
                     college: sightingData.college,
                     time_exact: formattedTime,
                     citationNumber: citationNumber,
+                    licensePlate: licensePlate, // Include the license plate data
                 });
             });
 
@@ -487,6 +489,7 @@ function fetchSightings() {
             console.error("Error fetching sightings:", error);
         });
 }
+
 
 // Global variable to keep track of markers
 var sightingMarkers = [];
