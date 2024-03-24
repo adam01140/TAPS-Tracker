@@ -513,7 +513,7 @@ function displaySightings() {
             <div class="sighting-location">${sighting.college}</div>
             <div>${sighting.time_exact}</div>
             <div>Citation #: ${sighting.citationNumber}</div>
-            <div>License Plate: ${sighting.licensePlate}</div>
+            
         `;
         container.appendChild(div);
 
@@ -522,7 +522,7 @@ function displaySightings() {
             const marker = new google.maps.Marker({
                 position: { lat: college.lat, lng: college.lng },
                 map: forecastMap,
-                title: `${sighting.college}: Citation #${sighting.citationNumber}, License Plate: ${sighting.licensePlate}`
+                title: `${sighting.college}: Citation #${sighting.citationNumber}`
             });
             sightingMarkers.push(marker);
         }
