@@ -66,8 +66,7 @@
 			<input type="text" id="citationNumber" placeholder="Citation Number">
 			<br><br>
 		<select id="collegeLocation">
-        <option value=""><b>Select a location</option>
-		
+		<option value="152 CROWN - MERRILL APARTMENTS">152 CROWN - MERRILL APARTMENTS</option>
     </select>
 	<br><br>
 	<div id="map" class="map2" ></div>
@@ -277,6 +276,12 @@ var colleges = [
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 15,
+        center: new google.maps.LatLng(36.995412, -122.060783),
+        gestureHandling: 'greedy'
+    });
+	
+	forecastMap = new google.maps.Map(document.getElementById("forecastMap"), {
+        zoom: 14.5,
         center: new google.maps.LatLng(36.995412, -122.060783),
         gestureHandling: 'greedy'
     });
