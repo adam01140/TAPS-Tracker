@@ -17,6 +17,16 @@
 	
 	
 	
+	<style>
+        .item {
+            background-color: #f0f0f0; /* Light grey background */
+            border-radius: 10px; /* Rounded corners */
+            padding: 10px; /* Some padding inside the div */
+            margin-bottom: 10px; /* Margin at the bottom to separate each item */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow for depth */
+        }
+    </style>
+	
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
@@ -103,9 +113,6 @@
                   </div>
                 </div>
               </div>
-			  
-			 <button id="toggleSightingsButton" onclick="toggleSightingsDisplay()"> Show More</button>
-			<br>
             </div>
 
             <div class="drop flex" id="sightings"></div>
@@ -153,7 +160,22 @@
     <button onclick="submitCitation()">Submit Citation</button>
 </div>
 <br><br>
-<div id="map" class="map"></div>
+<div id="map" class="map" style="display:none"></div>
+<h1> Recent Citations </h1>
+
+<br>
+
+
+
+
+<br>
+<button id="toggleSightingsButton" onclick="toggleSightingsDisplay()"> Show More</button>
+<br>
+	
+<div id="forecastMap" class="map"></div>	
+			
+<div id="sightingsContainer"></div>
+
 </div>
 </div>
 
@@ -570,18 +592,18 @@ var sightingMarkers = [];
 var showingAllSightings = false;
 
 function displaySightings() {
-    const container = document.getElementById("sightings");
+    // Adjust the container to the new sightingsContainer div
+    const container = document.getElementById("sightingsContainer");
     container.innerHTML = ""; // Clear the container
 
     sightingMarkers.forEach(marker => marker.setMap(null));
-    sightingMarkers = []; // Reset the marker array
+    sightingMarkers = [];
 
     if (allSightings.length === 0) {
         container.innerHTML = '<div class="item">No Data Available</div>';
         return;
     }
 
-    // Determine the number of sightings to show based on showingAllSightings flag
     const sightingsToShow = showingAllSightings ? allSightings : allSightings.slice(0, 3);
 
     sightingsToShow.forEach(sighting => {
@@ -605,9 +627,9 @@ function displaySightings() {
         }
     });
 
-    // Update the button text based on the current state
     document.getElementById("toggleSightingsButton").textContent = showingAllSightings ? "Show Less" : "Show More";
 }
+
 
 function toggleSightingsDisplay() {
     showingAllSightings = !showingAllSightings;
@@ -713,7 +735,6 @@ fetchSightings();
 	
   </body>
 </html>
-
 
 
 
