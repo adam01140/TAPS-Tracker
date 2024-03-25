@@ -137,14 +137,18 @@
 			<br><br>
 			<center>
 			<h1> Report a Sighting </h1>
+			
+			<input type="text" id="citationNumber" placeholder="Citation Number">
 			<br><br>
 		<select id="collegeLocation">
-        <option value="">Select a location</option>
+        <option value=""><b>Select a location</option>
     </select>
 	<br><br>
-	<input type="text" id="citationNumber" placeholder="Citation Number">
+	<div id="map" class="map2" ></div>
+	
 	
 	<br><br>
+	<b>
     <input type="number" id="year" placeholder="Year (YYYY)" min="2000" max="2099">
     <input type="number" id="month" placeholder="Month (MM)" min="1" max="12">
     <input type="number" id="day" placeholder="Day (DD)" min="1" max="31">
@@ -152,28 +156,25 @@
     <input type="number" id="minute" placeholder="Minute (MM)" min="0" max="59">
     <br>
     <br>
-    <input type="text" id="licensePlate" placeholder="License Plate (Optional, helps us verify citations)">
+    <input type="text" id="licensePlate" placeholder="License Plate">
     <br>
+	</b>
     <!-- Location dropdown -->
     
     <br>
     <button onclick="submitCitation()">Submit Citation</button>
+	<br><br><br>
 </div>
 <br><br>
 <div id="map" class="map" style="display:none"></div>
-<h1> Recent Citations </h1>
-
-<br>
-
-
-
-
+<h1> Recent Citations: </h1>
+	
+<div id="forecastMap" class="map"></div>	
 <br>
 <button id="toggleSightingsButton" onclick="toggleSightingsDisplay()"> Show More</button>
 <br>
-	
-<div id="forecastMap" class="map"></div>	
-			
+
+<center>	
 <div id="sightingsContainer"></div>
 
 </div>
@@ -610,6 +611,8 @@ function displaySightings() {
         let div = document.createElement("div");
         div.className = "item";
         div.innerHTML = `
+		
+			<b><center>
             <div class="sighting-location">${sighting.college}</div>
             <div>${sighting.time_exact}</div>
             <div>Citation #: ${sighting.citationNumber}</div>

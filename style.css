@@ -134,6 +134,24 @@ button {
   margin: 0px auto;
   
 }
+
+.map2{
+  border: 2px solid lightblue;
+  width: 60%;
+  aspect-ratio: 1/1;
+  margin: 0px auto;
+  
+}
+
+.cite{
+  border: 2px solid lightblue;
+  width: fit-content;
+  aspect-ratio: 1/1;
+  margin: 0px auto;
+  
+}
+
+
 .blk{
   color: black;
 }
