@@ -400,7 +400,7 @@ function submitCitation() {
             college: selectedCollegeName,
             timestamp: firebase.firestore.Timestamp.fromDate(citationDate),
             citationNumber: citationNumber,
-            licensePlate: licensePlate,
+            //licensePlate: licensePlate,
         })
         .then(() => {
             // Success: Citation reported
@@ -412,7 +412,7 @@ function submitCitation() {
         .catch(error => {
             // Handle errors here
             //console.error("Error reporting citation: ", error);
-            alert("Failed to report citation.");
+            //alert("Failed to report citation.");
         });
     } else {
         //alert("Please enter a valid date and time.");

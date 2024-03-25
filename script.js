@@ -221,13 +221,13 @@ function submitCitation() {
             timestamp: firebase.firestore.Timestamp.fromDate(citationDate),
         })
         .then(() => {
-            alert("Citation reported successfully!");
+            //alert("Citation reported successfully!");
             // Hide the form and clear input fields as necessary
             document.getElementById('citationDateTimeForm').style.display = 'none';
         })
         .catch(error => {
             console.error("Error reporting citation: ", error);
-            alert("Failed to report citation.");
+            //alert("Failed to report citation.");
         });
     } else {
         alert("Please enter a valid date and time.");
