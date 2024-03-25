@@ -67,6 +67,7 @@
 			<br><br>
 		<select id="collegeLocation">
         <option value=""><b>Select a location</option>
+		
     </select>
 	<br><br>
 	<div id="map" class="map2" ></div>
@@ -279,11 +280,6 @@ function initMap() {
         center: new google.maps.LatLng(36.995412, -122.060783),
         gestureHandling: 'greedy'
     });
-    forecastMap = new google.maps.Map(document.getElementById("forecastMap"), {
-        zoom: 14.5,
-        center: new google.maps.LatLng(36.995412, -122.060783),
-        gestureHandling: 'greedy'
-    });
 
     for (let i = 0; i < colleges.length; i++) {
         let college = colleges[i];
@@ -293,11 +289,26 @@ function initMap() {
             title: college.name,
         });
         marker.addListener("click", function () {
-            reportSighting(college.name);
+            selectLocation(college.name); // Call a function to select the location
         });
         markers.push(marker);
     }
 }
+
+// New function to update the dropdown selection
+function selectLocation(collegeName) {
+    const selectElement = document.getElementById("collegeLocation");
+    // Find the option with the matching value and select it
+    for (let option of selectElement.options) {
+        if (option.value === collegeName) {
+            option.selected = true;
+            break;
+        }
+    }
+    // Trigger any change event associated with the selection if needed
+    selectElement.dispatchEvent(new Event('change'));
+}
+
 
 function handleLocationError(browserHasGeolocation, pos) {
     alert(
