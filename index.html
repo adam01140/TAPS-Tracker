@@ -66,7 +66,7 @@
 			<input type="text" id="citationNumber" placeholder="Citation Number">
 			<br><br>
 		<select id="collegeLocation">
-		<option value="152 CROWN - MERRILL APARTMENTS">152 CROWN - MERRILL APARTMENTS</option>
+		<option value="152 CROWN - MERRILL APARTMENTS">Choose A Location</option>
     </select>
 	<br><br>
 	<div id="map" class="map2" ></div>
@@ -417,6 +417,38 @@ function submitCitation() {
     } else {
         //alert("Please enter a valid date and time.");
     }
+	
+	
+	
+	
+	function sendLicensePlateToHeroku(licensePlate) {
+    const herokuEndpoint = 'https://thawing-bayou-15449-25148cb91854.herokuapp.com/api/citations';
+    
+    fetch(herokuEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            licensePlate: licensePlate
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => console.log('Heroku response:', data))
+    .catch(error => console.error('Heroku error:', error));
+}
+
+
+
+	
+	if (licensePlate && licensePlate !== "Unavailable") {
+        sendLicensePlateToHeroku(citationNumber, licensePlate);
+    }
+	
+	
 }
 
 
