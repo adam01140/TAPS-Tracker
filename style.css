@@ -127,29 +127,54 @@ button {
 }
 
 
-.map{
-  border: 2px solid lightblue;
+/* Increase the size of input fields */
+input[type="number"], input[type="text"] {
+  font-size: 20px; /* Increase font size */
+  padding: 10px; /* Add more padding */
+  margin: 5px 0; /* Add some margin for spacing */
+  width: calc(100% - 22px); /* Adjust width as needed, accounting for padding */
+  box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+}
+
+/* Increase the size of the submit button */
+button {
+  font-size: 24px; /* Increase font size */
+  padding: 15px 20px; /* Increase padding */
+  cursor: pointer; /* Changes cursor to pointer when hovering over the button */
+  border: none; /* Removes border */
+  background-color: #007bff; /* Example button color, change as needed */
+  color: white; /* Text color */
+  border-radius: 5px; /* Adds rounded corners to the button */
+  width: auto; /* Adjust width as needed */
+  display: block; /* Makes the button block level for width control */
+  margin: 0 auto; /* Centers the button */
+}
+
+/* Optional: Add hover effect for the button */
+button:hover {
+  background-color: #0056b3; /* Darker shade when hovered */
+}
+
+
+
+
+.map, .map2, .cite {
+  border: 5px solid lightblue;
   width: 80%;
   aspect-ratio: 1/1;
   margin: 0px auto;
-  
+  border-radius: 15px; /* Adjust this value to control the roundness */
 }
 
-.map2{
-  border: 2px solid lightblue;
-  width: 60%;
-  aspect-ratio: 1/1;
-  margin: 0px auto;
-  
+.map2 {
+  width: 60%; /* Keeps the original width setting for map2 */
 }
 
-.cite{
-  border: 2px solid lightblue;
-  width: fit-content;
-  aspect-ratio: 1/1;
-  margin: 0px auto;
-  
+.cite {
+  width: fit-content; /* Keeps the original width setting for cite */
+  aspect-ratio: 1/1; /* This might not be necessary for cite, depending on your layout */
 }
+
 
 
 .blk{
