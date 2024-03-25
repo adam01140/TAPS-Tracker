@@ -130,14 +130,20 @@
     <input type="number" id="day" placeholder="Day (DD)" min="1" max="31">
     <input type="number" id="hour" placeholder="Hour (HH, 24hr)" min="0" max="23">
     <input type="number" id="minute" placeholder="Minute (MM)" min="0" max="59">
-	<br>
-	<input type="text" id="citationNumber" placeholder="Citation Number (Optional)">
-	<br>
-	<input type="text" id="licensePlate" placeholder="License Plate (Optional)">
-
-
+    <br>
+    <input type="text" id="citationNumber" placeholder="Citation Number (Optional)">
+    <br>
+    <input type="text" id="licensePlate" placeholder="License Plate (Optional)">
+    <br>
+    <!-- Location dropdown -->
+    <select id="collegeLocation">
+        <option value="">Select a location</option>
+        <!-- Options will be populated by JavaScript -->
+    </select>
+    <br>
     <button onclick="submitCitation()">Submit Citation</button>
 </div>
+
         </div>
       </div>
 	  
@@ -389,34 +395,63 @@ function reportSighting(collegeName) {
 
 
 
+function populateLocationDropdown() {
+    const selectElement = document.getElementById("collegeLocation");
+    colleges.forEach(college => {
+        const option = document.createElement("option");
+        option.value = college.name;
+        option.textContent = college.name;
+        selectElement.appendChild(option);
+    });
+}
 
+// Call the function to populate the dropdown after defining it
+populateLocationDropdown();
 
 function submitCitation() {
+    // Retrieve input values
     const year = document.getElementById('year').value;
-    const month = document.getElementById('month').value - 1;
+    const month = document.getElementById('month').value - 1; // JS months are 0-indexed
     const day = document.getElementById('day').value;
     const hour = document.getElementById('hour').value;
     const minute = document.getElementById('minute').value;
     const citationNumber = document.getElementById('citationNumber').value || "Unavailable";
     const licensePlate = document.getElementById('licensePlate').value || "Unavailable";
+    const selectedCollegeName = document.getElementById('collegeLocation').value;
 
+    // Find the selected college object from the colleges array
+    const selectedCollege = colleges.find(college => college.name === selectedCollegeName);
+
+    if (!selectedCollege) {
+        alert("Please select a valid location.");
+        return;
+    }
+
+    // Create a Date object for the citation
     const citationDate = new Date(year, month, day, hour, minute);
 
+    // Validate the citationDate
     if (!isNaN(citationDate.getTime())) {
+        // Get the current user ID from Firebase authentication
         const userId = firebase.auth().currentUser.uid;
+
+        // Add the citation to the Firestore database
         db.collection("sightings").add({
             uid: userId,
-            college: window.currentCollege,
+            college: selectedCollegeName,
             timestamp: firebase.firestore.Timestamp.fromDate(citationDate),
             citationNumber: citationNumber,
             licensePlate: licensePlate,
         })
         .then(() => {
+            // Success: Citation reported
             alert("Citation reported successfully!");
-            document.getElementById('citationDateTimeForm').style.display = 'none';
             // Optionally, reset form fields here
+            document.getElementById('citationDateTimeForm').reset();
+            document.getElementById('citationDateTimeForm').style.display = 'none';
         })
         .catch(error => {
+            // Handle errors here
             console.error("Error reporting citation: ", error);
             alert("Failed to report citation.");
         });
