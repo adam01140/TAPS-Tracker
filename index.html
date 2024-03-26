@@ -66,7 +66,7 @@
 			<input type="text" id="citationNumber" placeholder="Citation Number">
 			<br><br>
 		<select id="collegeLocation">
-		<option value="152 CROWN - MERRILL APARTMENTS">Choose A Location</option>
+		<option value="152 CROWN - MERRILL APARTMENTS">152 CROWN - MERRILL APARTMENTS</option>
     </select>
 	<br><br>
 	<div id="map" class="map2" ></div>
@@ -537,14 +537,14 @@ function displaySightings() {
         return;
     }
 
-    const sightingsToShow = showingAllSightings ? allSightings : allSightings.slice(0, 3);
+    const sightingsToShow = showingAllSightings ? allSightings : allSightings.slice(0, 5);
 
     sightingsToShow.forEach(sighting => {
         let div = document.createElement("div");
         div.className = "item";
         div.innerHTML = `
 		
-			<b><center>
+			<center>
             <div class="sighting-location">${sighting.college}</div>
             <div>${sighting.time_exact}</div>
             <div>Citation #: ${sighting.citationNumber}</div>
