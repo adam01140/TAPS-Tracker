@@ -127,6 +127,10 @@ button {
 }
 
 
+
+
+	
+
 /* Increase the size of input fields */
 input[type="number"], input[type="text"] {
   font-size: 20px; /* Increase font size */
@@ -135,7 +139,6 @@ input[type="number"], input[type="text"] {
   width: calc(100% - 40px); /* Adjust width as needed, accounting for padding */
   box-sizing: border-box; /* Ensures padding doesn't affect overall width */
 }
-
 
 
 /* Increase the size of the submit button */
@@ -205,7 +208,6 @@ button:hover {
 #collegeLocation option {
   font-size: 1.2em; /* Match font size of the dropdown */
 }
-
 
 
 

@@ -15,10 +15,53 @@
       rel="stylesheet"
     />
 	
+
+	
 	
 	
 	<style>
-        .item {
+        body, html {
+            overflow-x: visible; /* Allow horizontal overflow */
+        }
+        
+        #timeOccurred {
+            font-size: 20px; /* Increased font size */
+            padding: 12px; /* Slightly larger padding */
+            width: calc(100% - 40px); /* Use viewport widths to ensure it's larger than the viewport */
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: block; /* Ensure it's not inline */
+            margin: 0 auto; /* Center it within its container, though it will extend off-screen */
+        }
+		
+		#timeOccurred {
+            font-size: 20px; /* Increased font size */
+            padding: 12px; /* Slightly larger padding */
+            width: calc(100% - 40px); /* Use viewport widths to ensure it's larger than the viewport */
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: block; /* Ensure it's not inline */
+            margin: 0 auto; /* Center it within its container, though it will extend off-screen */
+        }
+
+       @media (max-width: 1000px) {
+            #timeOccurred {
+            font-size: 20px; /* Increased font size */
+            padding: 12px; /* Slightly larger padding */
+            width: 70vw; /* Use viewport widths to ensure it's larger than the viewport */
+			
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: block; /* Ensure it's not inline */
+            margin: 0 auto; /* Center it within its container, though it will extend off-screen */
+        }
+        }
+		
+		
+		.item {
             background-color: #f0f0f0; /* Light grey background */
             border-radius: 10px; /* Rounded corners */
             padding: 10px; /* Some padding inside the div */
@@ -26,6 +69,8 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow for depth */
         }
     </style>
+	
+	
 	
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
@@ -66,7 +111,7 @@
 			<input type="text" id="citationNumber" placeholder="Citation Number">
 			<br><br>
 		<select id="collegeLocation">
-		<option value="152 CROWN - MERRILL APARTMENTS">152 CROWN - MERRILL APARTMENTS</option>
+		<option value="152 CROWN - MERRILL APARTMENTS" >152 CROWN - MERRILL APARTMENTS</option>
     </select>
 	<br><br>
 	<div id="map" class="map2" ></div>
@@ -74,11 +119,7 @@
 	
 	<br><br>
 	<b>
-    <input type="number" id="year" placeholder="Year (YYYY)" min="2000" max="2099">
-    <input type="number" id="month" placeholder="Month (MM)" min="1" max="12">
-    <input type="number" id="day" placeholder="Day (DD)" min="1" max="31">
-    <input type="number" id="hour" placeholder="Hour (HH, 24hr)" min="0" max="23">
-    <input type="number" id="minute" placeholder="Minute (MM)" min="0" max="59">
+   <input type="datetime-local" id="timeOccurred" required>
     <br>
     <input type="text" id="licensePlate" placeholder="License Plate (Optional)">
     <br>
@@ -86,8 +127,6 @@
     <br>
     <button id="submitCitationButton" onclick="submitCitation()">Submit Citation</button>
 
-	
-	
 	
 	<br>
 </div>
@@ -368,57 +407,45 @@ function populateLocationDropdown() {
 populateLocationDropdown();
 
 function submitCitation() {
-    // Retrieve input values
-    const year = document.getElementById('year').value;
-    const month = document.getElementById('month').value - 1; // JS months are 0-indexed
-    const day = document.getElementById('day').value;
-    const hour = document.getElementById('hour').value;
-    const minute = document.getElementById('minute').value;
     const citationNumber = document.getElementById('citationNumber').value || "Unavailable";
     const licensePlate = document.getElementById('licensePlate').value || "Unavailable";
     const selectedCollegeName = document.getElementById('collegeLocation').value;
 
+    // Retrieve the datetime-local input as a string
+    const timeOccurredStr = document.getElementById('timeOccurred').value;
+
+    // Convert the string to a Date object
+    const citationDate = new Date(timeOccurredStr);
+
     // Find the selected college object from the colleges array
     const selectedCollege = colleges.find(college => college.name === selectedCollegeName);
 
-    if (!selectedCollege) {
-        //alert("Please select a valid location.");
+    if (!selectedCollege || !timeOccurredStr) {
+        alert("Please select a valid location and ensure all fields are filled.");
         return;
     }
 
-    // Create a Date object for the citation
-    const citationDate = new Date(year, month, day, hour, minute);
-
-    // Validate the citationDate
     if (!isNaN(citationDate.getTime())) {
-        // Get the current user ID from Firebase authentication
-        const userId = firebase.auth().currentUser.uid;
-
         // Add the citation to the Firestore database
         db.collection("sightings").add({
-            uid: userId,
             college: selectedCollegeName,
             timestamp: firebase.firestore.Timestamp.fromDate(citationDate),
             citationNumber: citationNumber,
-            //licensePlate: licensePlate,
+            licensePlate: licensePlate,
         })
         .then(() => {
-            // Success: Citation reported
-            //alert("Citation reported successfully!");
-            // Optionally, reset form fields here
+            console.log("Citation reported successfully!");
             document.getElementById('citationDateTimeForm').reset();
             document.getElementById('citationDateTimeForm').style.display = 'none';
+            // Optionally refresh or update the UI here
         })
         .catch(error => {
-            // Handle errors here
             //console.error("Error reporting citation: ", error);
             //alert("Failed to report citation.");
         });
     } else {
-        //alert("Please enter a valid date and time.");
+        alert("Please enter a valid date and time.");
     }
-	
-	
 	
 	
 	function sendLicensePlateToHeroku(licensePlate) {
