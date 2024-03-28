@@ -101,6 +101,9 @@
 			
 			<input type="text" id="citationNumber" placeholder="Citation Number">
 			<br><br>
+			
+			<input type="datetime-local" id="timeOccurred" required>
+			<br>
 		<select id="collegeLocation">
 		<option value="152 CROWN - MERRILL APARTMENTS" >152 CROWN - MERRILL APARTMENTS</option>
     </select>
@@ -109,9 +112,7 @@
 	
 	
 	<br><br>
-	<b>
-   <input type="datetime-local" id="timeOccurred" required>
-    <br>
+
     <input type="text" id="licensePlate" placeholder="License Plate (Optional)">
     <br>
 	</b>
@@ -146,7 +147,24 @@
 	
 	<script>
 	
-	
+	 window.addEventListener('DOMContentLoaded', (event) => {
+    // Create a new Date object for the current date and time
+    const now = new Date();
+
+    // Format the date and time to match the datetime-local input requirements (YYYY-MM-DDThh:mm)
+    // PadStart ensures that months, days, hours, and minutes are always represented with two digits
+    const formattedDateTime = now.getFullYear() + '-' +
+                              (now.getMonth() + 1).toString().padStart(2, '0') + '-' +
+                              now.getDate().toString().padStart(2, '0') + 'T' +
+                              now.getHours().toString().padStart(2, '0') + ':' +
+                              now.getMinutes().toString().padStart(2, '0');
+
+    // Set the value of the datetime-local input to the formatted current date and time
+    document.getElementById('timeOccurred').value = formattedDateTime;
+  });
+  
+  
+  
 	var firebaseConfig = {
     apiKey: "AIzaSyCGqa-UqWc1piwR6dcdi_2GFH_59JCqUbc",
     authDomain: "fucktaps-5b81b.firebaseapp.com",

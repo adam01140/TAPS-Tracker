@@ -188,7 +188,7 @@ button:hover {
   font-size: 1.2em; /* Increase the font size */
   padding: 10px; /* Add some padding inside the dropdown */
   width: calc(100% - 40px); /* Make the dropdown full width */
-  height: 40px; /* Make the dropdown full width */
+ 
   box-sizing: border-box; /* Ensure padding is included in the total width */
 }
 
