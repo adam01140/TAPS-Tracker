@@ -24,16 +24,7 @@
             overflow-x: visible; /* Allow horizontal overflow */
         }
         
-        #timeOccurred {
-            font-size: 20px; /* Increased font size */
-            padding: 12px; /* Slightly larger padding */
-            width: calc(100% - 40px); /* Use viewport widths to ensure it's larger than the viewport */
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            display: block; /* Ensure it's not inline */
-            margin: 0 auto; /* Center it within its container, though it will extend off-screen */
-        }
+      
 		
 		#timeOccurred {
             font-size: 20px; /* Increased font size */
@@ -110,6 +101,9 @@
 			
 			<input type="text" id="citationNumber" placeholder="Citation Number">
 			<br><br>
+			
+			<input type="datetime-local" id="timeOccurred" required>
+			<br>
 		<select id="collegeLocation">
 		<option value="152 CROWN - MERRILL APARTMENTS" >152 CROWN - MERRILL APARTMENTS</option>
     </select>
@@ -118,9 +112,7 @@
 	
 	
 	<br><br>
-	<b>
-   <input type="datetime-local" id="timeOccurred" required>
-    <br>
+
     <input type="text" id="licensePlate" placeholder="License Plate (Optional)">
     <br>
 	</b>
@@ -155,7 +147,24 @@
 	
 	<script>
 	
-	
+	 window.addEventListener('DOMContentLoaded', (event) => {
+    // Create a new Date object for the current date and time
+    const now = new Date();
+
+    // Format the date and time to match the datetime-local input requirements (YYYY-MM-DDThh:mm)
+    // PadStart ensures that months, days, hours, and minutes are always represented with two digits
+    const formattedDateTime = now.getFullYear() + '-' +
+                              (now.getMonth() + 1).toString().padStart(2, '0') + '-' +
+                              now.getDate().toString().padStart(2, '0') + 'T' +
+                              now.getHours().toString().padStart(2, '0') + ':' +
+                              now.getMinutes().toString().padStart(2, '0');
+
+    // Set the value of the datetime-local input to the formatted current date and time
+    document.getElementById('timeOccurred').value = formattedDateTime;
+  });
+  
+  
+  
 	var firebaseConfig = {
     apiKey: "AIzaSyAgYdoZnSv5ekxngv_ue61aFZUGcRlphok",
   authDomain: "defundtaps.firebaseapp.com",
@@ -522,25 +531,20 @@ function fetchSightings() {
             allSightings = []; // Clear the existing sightings array
 
             querySnapshot.forEach((doc) => {
-    const sightingData = doc.data();
-    const timeStr = sightingData.timestamp; // This is a string, e.g., "10/30/2019"
-    
-    // Convert the string to a Date object
-    const time = new Date(timeStr); // Directly pass the string to the Date constructor
+                const sightingData = doc.data();
+                const time = sightingData.timestamp ? sightingData.timestamp.toDate() : new Date();
+                const formattedTime = time.toLocaleString();
+                const citationNumber = sightingData.citationNumber || "Unavailable";
+                const licensePlate = sightingData.licensePlate || "Unavailable";
 
-    const formattedTime = time.toLocaleString();
-    const citationNumber = sightingData.citationNumber || "Unavailable";
-    const licensePlate = sightingData.licensePlate || "Unavailable";
-
-    // Continue with your logic
-    allSightings.push({
-        college: sightingData.college,
-        time_exact: formattedTime,
-        citationNumber: citationNumber,
-        licensePlate: licensePlate,
-    });
-});
-
+                // Add the sighting data, including the license plate, to the allSightings array
+                allSightings.push({
+                    college: sightingData.college,
+                    time_exact: formattedTime,
+                    citationNumber: citationNumber,
+                    licensePlate: licensePlate, // Include the license plate data
+                });
+            });
 
             // Call the function to update the UI with the new sightings data
             displaySightings();
@@ -549,6 +553,38 @@ function fetchSightings() {
         });
 }
 
+
+
+function fetchCitations() {
+    console.log("Fetching citations...");
+    db.collection("citations")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((querySnapshot) => {
+            console.log(`Received ${querySnapshot.size} citations`);
+            allSightings = []; // Consider renaming this variable to allCitations
+
+            querySnapshot.forEach((doc) => {
+                const citationData = doc.data();
+                const formattedTime = citationData.timestamp || "Unavailable"; // Assuming timestamp is a string
+                const citationNumber = citationData.citationNumber || "Unavailable";
+                const collegeName = citationData.college || "Unavailable";
+                const time = citationData.time || "Unavailable"; // This seems to be a new field, use it as needed
+
+                // Add the citation data to the allSightings (or allCitations) array
+                allSightings.push({
+                    college: collegeName,
+                    time_exact: formattedTime, // You might want to combine `timestamp` and `time` fields for display
+                    citationNumber: citationNumber,
+                    // Add other fields if necessary
+                });
+            });
+
+            // Call the function to update the UI with the new citations data
+            displaySightings(); // Consider renaming this function to displayCitations
+        }, (error) => {
+            console.error("Error fetching citations:", error);
+        });
+}
 
 // Global variable to keep track of markers
 var sightingMarkers = [];
@@ -694,7 +730,7 @@ function currentLocation(){
 }
 
 fetchSightings();	
-	
+fetchCitations();
 	
 	</script>
 	
@@ -702,6 +738,7 @@ fetchSightings();
 	
   </body>
 </html>
+
 
 
 
