@@ -169,8 +169,6 @@
 
 
 
-</div>
-
 
 
 <br><br>
@@ -196,6 +194,8 @@
 </div>
 	
 	
+</div>
+
 	<script>
 	
 	
@@ -688,31 +688,6 @@ function updatePredictionVariablesDisplay(location, time, likelihood, citationsW
   const displayElement = document.getElementById("predictionVariables");
   displayElement.innerHTML = `<strong>Prediction Variables:</strong><br>Location: ${location}<br>Time: ${time} <br>totalCitations: ${totalCitations} <br>citationsWithinHour: ${citationsWithinHour} <br>Likelihood: ${likelihood.toFixed(2)}% `;
 }
-
-// Modify the calculatePrediction function to include a call to updatePredictionVariablesDisplay
-function calculatePrediction() {
-  const location = document.getElementById('predictionLocation').value;
-  const inputTime = document.getElementById('predictionTime').value;
-
-  if (!inputTime) {
-    alert("Please enter the time you wish to park.");
-    return;
-  }
-
-  // The rest of your calculatePrediction function remains the same...
-
-  // At the end of the then() method after calculating likelihood, add:
-  updatePredictionVariablesDisplay(location, inputTime, likelihood);
-}
-
-// Continue with the rest of your calculatePrediction function...
-
-
-
-
-
-
-
 // Add this function to your script section
 function calculatePrediction() {
   const location = document.getElementById('predictionLocation').value;
@@ -729,6 +704,8 @@ function calculatePrediction() {
   const minute = parseInt(inputTime.split(':')[1], 10);
   const predictionTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0, 0);
 
+  console.log("Prediction Time:", predictionTime);
+
   // Get citations from Firestore
   db.collection("citations")
     .where("college", "==", location)
@@ -741,44 +718,35 @@ function calculatePrediction() {
         const sightingData = doc.data();
         let citationTime;
 
-        // Parsing the timestamp and time from strings
         if (sightingData.timestamp) {
           const [month, day, year] = sightingData.timestamp.split('/').map(Number);
-          let hours = 0, minutes = 0;
-          if (sightingData.time && sightingData.time.length === 4) {
-            hours = parseInt(sightingData.time.substring(0, 2), 10);
-            minutes = parseInt(sightingData.time.substring(2, 4), 10);
-          }
+          const timePart = sightingData.time || "0000";
+          const hours = parseInt(timePart.substring(0, 2), 10);
+          const minutes = parseInt(timePart.substring(2, 4), 10);
+
           citationTime = new Date(year, month - 1, day, hours, minutes);
-        } else {
-          console.warn('Document missing timestamp:', sightingData);
-          return;
-        }
+          console.log("Citation Time:", citationTime);
 
-        const timeDifference = Math.abs(predictionTime - citationTime);
+          const timeDifference = Math.abs(predictionTime - citationTime);
 
-        // Check if the citation happened within an hour (3600000 milliseconds) of the prediction time
-        if (timeDifference <= 3600000) {
-          citationsWithinHour++;
+          // Check if the citation happened within an hour of the prediction time
+          if (timeDifference <= 3600000) {
+            citationsWithinHour++;
+          }
         }
       });
 
+      console.log("Citations Within Hour:", citationsWithinHour);
+      
       const likelihood = totalCitations > 0 ? (citationsWithinHour / totalCitations) * 100 : 0;
-	updatePredictionVariablesDisplay(location, inputTime, likelihood, citationsWithinHour, totalCitations);
-	
-	
-	
-      // Display the prediction result
+      updatePredictionVariablesDisplay(location, inputTime, likelihood, citationsWithinHour, totalCitations);
+
       document.getElementById('predictionResult').innerText = `There is a ${likelihood.toFixed(2)}% chance of getting a ticket at ${location} at the specified time.`;
     })
     .catch((error) => {
       console.error("Error getting citations:", error);
       document.getElementById('predictionResult').innerText = "Error calculating prediction.";
     });
-	
-	
-	
-	
 }
 
 
