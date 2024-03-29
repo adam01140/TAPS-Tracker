@@ -243,28 +243,6 @@ var days = [
 ];
 
 
-
-
-window.addEventListener('DOMContentLoaded', (event) => {
-    const now = new Date();
-
-    // Formatting for date-time input
-    const formattedDate = now.getFullYear() + '-' +
-        (now.getMonth() + 1).toString().padStart(2, '0') + '-' +
-        now.getDate().toString().padStart(2, '0');
-
-    const formattedTime = now.getHours().toString().padStart(2, '0') + ':' +
-        now.getMinutes().toString().padStart(2, '0');
-
-    // Existing code to set the date
-    document.getElementById('timeOccurred').value = formattedDate + 'T' + formattedTime;
-
-    // New code to set the time
-    document.getElementById('predictionTime').value = formattedTime;
-});
-
-
-
 window.addEventListener('DOMContentLoaded', (event) => {
     const now = new Date();
 
