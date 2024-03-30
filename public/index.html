@@ -483,80 +483,35 @@ function populateLocationDropdown() {
 
 // Call the function to populate the dropdown after defining it
 populateLocationDropdown();
-
-function submitCitation() {
+async function submitCitation() {
     const citationNumber = document.getElementById('citationNumber').value || "Unavailable";
     const licensePlate = document.getElementById('licensePlate').value || "Unavailable";
     const selectedCollegeName = document.getElementById('collegeLocation').value;
-
-    // Retrieve the datetime-local input as a string
     const timeOccurredStr = document.getElementById('timeOccurred').value;
-
-    // Convert the string to a Date object
-    const citationDate = new Date(timeOccurredStr);
-
-    // Find the selected college object from the colleges array
-    const selectedCollege = colleges.find(college => college.name === selectedCollegeName);
-
-    if (!selectedCollege || !timeOccurredStr) {
-        alert("Please select a valid location and ensure all fields are filled.");
-        return;
-    }
-
-    if (!isNaN(citationDate.getTime())) {
-        // Add the citation to the Firestore database
-        db.collection("sightings").add({
-            college: selectedCollegeName,
-            timestamp: firebase.firestore.Timestamp.fromDate(citationDate),
-            citationNumber: citationNumber,
-            licensePlate: licensePlate,
-        })
-        .then(() => {
-            console.log("Citation reported successfully!");
-            document.getElementById('citationDateTimeForm').reset();
-            document.getElementById('citationDateTimeForm').style.display = 'none';
-            // Optionally refresh or update the UI here
-        })
-        .catch(error => {
-            //console.error("Error reporting citation: ", error);
-            //alert("Failed to report citation.");
-        });
-    } else {
-        alert("Please enter a valid date and time.");
-    }
-	
-	
-	function sendLicensePlateToHeroku(licensePlate) {
-    const herokuEndpoint = 'https://thawing-bayou-15449-25148cb91854.herokuapp.com/api/citations';
     
-    fetch(herokuEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            licensePlate: licensePlate
-        }),
-    })
-    .then(response => {
+    const postData = {
+        citationNumber: citationNumber,
+        licensePlate: licensePlate,
+        locationOccurred: selectedCollegeName,
+        timeOccurred: timeOccurredStr, // Ensure your Heroku server can handle this format or convert as needed
+    };
+
+    try {
+        const response = await fetch('https://thawing-bayou-15449-25148cb91854.herokuapp.com/api/citations', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData),
+        });
+
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return response.json();
-    })
-    .then(data => console.log('Heroku response:', data))
-    .catch(error => console.error('Heroku error:', error));
-}
-
-
-
-	
-	if (licensePlate && licensePlate !== "Unavailable") {
-        sendLicensePlateToHeroku(licensePlate);
+        console.log("Citation submitted successfully!");
+        // Reset the form or provide further user feedback as necessary
+    } catch (error) {
+        console.error("Error submitting citation:", error);
     }
-	
-	
 }
-
-
 
 
 
@@ -607,66 +562,29 @@ function toggleSightings() {
 
 
 
+async function fetchSightings() {
+    const herokuURL = 'https://thawing-bayou-15449-25148cb91854.herokuapp.com/api/citations?password=N@vy0114';
 
+    try {
+        const response = await fetch(herokuURL);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
 
-function fetchSightings() {
-    console.log("Fetching sightings...");
-    db.collection("citations")
-        .orderBy("citationNumber", "desc")
-        .onSnapshot((querySnapshot) => {
-            console.log(`Received ${querySnapshot.size} sightings`);
-            allSightings = []; // Clear the existing sightings array
+        // Assuming the data structure is similar, otherwise, adjust the mapping accordingly
+        allSightings = data.map(sighting => ({
+            college: sighting.locationOccurred || 'Unavailable',
+            time_exact: sighting.timeOccurred || 'Unavailable',
+            citationNumber: sighting.citationNumber || 'Unavailable',
+            licensePlate: sighting.licensePlate || 'Unavailable',
+        }));
 
-            querySnapshot.forEach((doc) => {
-                const sightingData = doc.data();
-                let citationDateTime;
-
-                // Check and parse the timestamp string "MM/DD/YYYY"
-                if (sightingData.timestamp) {
-                    const dateParts = sightingData.timestamp.split('/');
-                    const year = parseInt(dateParts[2], 10);
-                    const month = parseInt(dateParts[0], 10) - 1; // Month is 0-indexed
-                    const day = parseInt(dateParts[1], 10);
-
-                    // Check and parse the time string "HHMM"
-                    if (sightingData.time && sightingData.time.length === 4) {
-                        const hours = parseInt(sightingData.time.substring(0, 2), 10);
-                        const minutes = parseInt(sightingData.time.substring(2, 4), 10);
-
-                        citationDateTime = new Date(year, month, day, hours, minutes);
-                    } else {
-                        // Default time to 0:00 if not provided or in incorrect format
-                        citationDateTime = new Date(year, month, day);
-                    }
-                } else {
-                    // Log warning and skip this document if timestamp is missing
-                    console.warn("Document missing timestamp, skipping: ", sightingData);
-                    return;
-                }
-
-                const formattedTime = citationDateTime.toLocaleString();
-                const citationNumber = sightingData.citationNumber || "Unavailable";
-                const licensePlate = sightingData.licensePlate || "Unavailable";
-
-                allSightings.push({
-                    college: sightingData.college,
-                    time_exact: formattedTime,
-                    citationNumber: citationNumber,
-                    licensePlate: licensePlate,
-                });
-            });
-
-            // Call the function to update the UI with the new sightings data
-            displaySightings();
-        }, (error) => {
-            console.error("Error fetching sightings:", error);
-        });
+        displaySightings();
+    } catch (error) {
+        console.error("Error fetching sightings:", error);
+    }
 }
-
-
-
-
-
 
 
 
