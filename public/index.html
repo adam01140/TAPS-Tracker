@@ -683,58 +683,63 @@ var sightingMarkers = [];
 
 // Global variable to keep track of whether we are showing all sightings or just the most recent 3
 var showingAllSightings = false;
+
+
 function displaySightings() {
-        const container = document.getElementById("sightingsContainer");
-        container.innerHTML = ""; // Clear the container
+    const container = document.getElementById("sightingsContainer");
+    container.innerHTML = ""; // Clear the container
 
-        sightingMarkers.forEach(marker => marker.setMap(null));
-        sightingMarkers = [];
+    sightingMarkers.forEach(marker => marker.setMap(null));
+    sightingMarkers = [];
 
-        if (allSightings.length === 0) {
-            container.innerHTML = '<div class="item">No Data Available</div>';
-            return;
-        }
-
-        const sightingsToShow = showingAllSightings ? allSightings : allSightings.slice(0, 5);
-
-        sightingsToShow.forEach(sighting => {
-            let div = document.createElement("div");
-            div.className = "item";
-
-            // Manually parse and format the ISO date string
-            const sightingDateTime = sighting.time_exact;
-            const [datePart, timePart] = sightingDateTime.split('T');
-            const [year, month, day] = datePart.split('-').map(num => parseInt(num, 10));
-            let [hour, minute] = timePart.substring(0, 5).split(':').map(num => parseInt(num, 10));
-
-            const ampm = hour >= 12 ? 'pm' : 'am';
-            hour = hour % 12 || 12; // Convert 24h to 12h format and handle midnight
-
-            const formattedDate = `${day}/${month}/${year}`;
-            const formattedTime = `${hour}:${minute < 10 ? '0' : ''}${minute}${ampm}`;
-
-            div.innerHTML = `
-                <center>
-                <div class="sighting-location">${sighting.college}</div>
-                <div>${formattedDate}</div>
-                <div>${formattedTime}</div>
-                <div>Citation #: ${sighting.citationNumber}</div>
-            `;
-            container.appendChild(div);
-
-            const college = colleges.find(college => college.name === sighting.college);
-            if (college) {
-                const marker = new google.maps.Marker({
-                    position: { lat: college.lat, lng: college.lng },
-                    map: forecastMap,
-                    title: `${sighting.college}: Citation #${sighting.citationNumber}`
-                });
-                sightingMarkers.push(marker);
-            }
-        });
-
-        document.getElementById("toggleSightingsButton").textContent = showingAllSightings ? "Show Less" : "Show More";
+    if (allSightings.length === 0) {
+        container.innerHTML = '<div class="item">No Data Available</div>';
+        return;
     }
+
+    // Sort allSightings by timeOccurred from newest to oldest
+    allSightings.sort((a, b) => b.time_exact.localeCompare(a.time_exact));
+
+    const sightingsToShow = showingAllSightings ? allSightings : allSightings.slice(0, 5);
+
+    sightingsToShow.forEach(sighting => {
+        let div = document.createElement("div");
+        div.className = "item";
+
+        // Manually parse and format the ISO date string
+        const sightingDateTime = sighting.time_exact;
+        const [datePart, timePart] = sightingDateTime.split('T');
+        const [year, month, day] = datePart.split('-').map(num => parseInt(num, 10));
+        let [hour, minute] = timePart.substring(0, 5).split(':').map(num => parseInt(num, 10));
+
+        const ampm = hour >= 12 ? 'pm' : 'am';
+        hour = hour % 12 || 12; // Convert 24h to 12h format and handle midnight
+
+        const formattedDate = `${day}/${month}/${year}`;
+        const formattedTime = `${hour}:${minute < 10 ? '0' : ''}${minute}${ampm}`;
+
+        div.innerHTML = `
+            <center>
+            <div class="sighting-location">${sighting.college}</div>
+            <div>${formattedDate}</div>
+            <div>${formattedTime}</div>
+            <div>Citation #: ${sighting.citationNumber}</div>
+        `;
+        container.appendChild(div);
+
+        const college = colleges.find(college => college.name === sighting.college);
+        if (college) {
+            const marker = new google.maps.Marker({
+                position: { lat: college.lat, lng: college.lng },
+                map: forecastMap,
+                title: `${sighting.college}: Citation #${sighting.citationNumber}`
+            });
+            sightingMarkers.push(marker);
+        }
+    });
+
+    document.getElementById("toggleSightingsButton").textContent = showingAllSightings ? "Show Less" : "Show More";
+}
 
 
 function toggleSightingsDisplay() {
