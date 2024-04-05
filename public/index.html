@@ -588,6 +588,12 @@ async function fetchSightings() {
 
 
 
+
+
+
+
+
+
 function populatePredictionLocationDropdown() {
   const selectElement = document.getElementById("predictionLocation");
   colleges.forEach(college => {
@@ -601,77 +607,57 @@ function populatePredictionLocationDropdown() {
 // Call this function to populate the dropdown after defining it
 populatePredictionLocationDropdown();
 
-function updatePredictionVariablesDisplay(location, time, likelihood, citationsWithinHour, totalCitations) {
-  // Assuming you want to display these variables in a div
-  const displayElement = document.getElementById("predictionVariables");
-  displayElement.innerHTML = `<strong>Prediction Variables:</strong><br>Location: ${location}<br>Time: ${time} <br>totalCitations: ${totalCitations} <br>citationsWithinHour: ${citationsWithinHour} <br>Likelihood: ${likelihood.toFixed(2)}% `;
-}
-// Add this function to your script section
+
+
 function calculatePrediction() {
-  const location = document.getElementById('predictionLocation').value;
-  const inputTime = document.getElementById('predictionTime').value;
+    const selectedLocation = document.getElementById('predictionLocation').value;
+    const selectedHour = parseInt(document.getElementById('predictionTime').value.split(':')[0], 10);
 
-  if (!inputTime) {
-    alert("Please enter the time you wish to park.");
-    return;
-  }
+    const citationsAtLocation = allSightings.filter(sighting => sighting.college === selectedLocation);
+    console.log("All sighting times at location:", citationsAtLocation.map(s => s.time_exact));
 
-  // Process the input time and adjust it to a Date object
-  const now = new Date();
-  const hour = parseInt(inputTime.split(':')[0], 10);
-  const minute = parseInt(inputTime.split(':')[1], 10);
-  const predictionTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0, 0);
+    const citationsAtLocationAndTime = citationsAtLocation.filter(sighting => {
+        const sightingTimeStr = sighting.time_exact.trim();
+        let sightingTime = new Date(sightingTimeStr);
+        let sightingHourUTC = sightingTime.getUTCHours();
 
-  console.log("Prediction Time:", predictionTime);
-
-  // Get citations from Firestore
-  db.collection("citations")
-    .where("college", "==", location)
-    .get()
-    .then((querySnapshot) => {
-      const totalCitations = querySnapshot.size;
-      let citationsWithinHour = 0;
-
-      querySnapshot.forEach((doc) => {
-        const sightingData = doc.data();
-        let citationTime;
-
-        if (sightingData.timestamp) {
-          const [month, day, year] = sightingData.timestamp.split('/').map(Number);
-          const timePart = sightingData.time || "0000";
-          const hours = parseInt(timePart.substring(0, 2), 10);
-          const minutes = parseInt(timePart.substring(2, 4), 10);
-
-          citationTime = new Date(year, month - 1, day, hours, minutes);
-          console.log("Citation Time:", citationTime);
-
-          const timeDifference = Math.abs(predictionTime - citationTime);
-
-          // Check if the citation happened within an hour of the prediction time
-          if (timeDifference <= 3600000) {
-            citationsWithinHour++;
-          }
+        // If parsing failed and sightingHourUTC is NaN, attempt manual parsing
+        if (isNaN(sightingHourUTC)) {
+            // Expected format: "YYYY-MM-DDTHH:MM:SSZ"
+            const parts = sightingTimeStr.split('T');
+            if (parts.length === 2) {
+                const timeParts = parts[1].split(':');
+                if (timeParts.length > 0) {
+                    sightingHourUTC = parseInt(timeParts[0], 10);
+                }
+            }
         }
-      });
 
-      console.log("Citations Within Hour:", citationsWithinHour);
-      
-      const likelihood = totalCitations > 0 ? (citationsWithinHour / totalCitations) * 100 : 0;
-      updatePredictionVariablesDisplay(location, inputTime, likelihood, citationsWithinHour, totalCitations);
-
-      document.getElementById('predictionResult').innerText = `There is a ${likelihood.toFixed(2)}% chance of getting a ticket at ${location} at the specified time.`;
-    })
-    .catch((error) => {
-      console.error("Error getting citations:", error);
-      document.getElementById('predictionResult').innerText = "Error calculating prediction.";
+        console.log(`Checking citation time: ${sightingTimeStr}, Hour: ${sightingHourUTC}`);
+        return sightingHourUTC === selectedHour;
     });
+
+    const countCitationsAtLocation = citationsAtLocation.length;
+    const countCitationsAtLocationAndTime = citationsAtLocationAndTime.length;
+
+    document.getElementById('predictionResult').innerHTML = `Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>
+        Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}`;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Initialize prediction locations dropdown (you could reuse populateLocationDropdown() or create a similar function for the prediction dropdown)
 populateLocationDropdown();
-
-
 
 
 
