@@ -639,9 +639,11 @@ function calculatePrediction() {
 
     const countCitationsAtLocation = citationsAtLocation.length;
     const countCitationsAtLocationAndTime = citationsAtLocationAndTime.length;
+	const percent = (countCitationsAtLocationAndTime)/(countCitationsAtLocation)*100
 
     document.getElementById('predictionResult').innerHTML = `Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>
-        Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}`;
+        Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime} <br>
+		Your chances of getting a ticket are <b> ${percent}%`;
 }
 
 
