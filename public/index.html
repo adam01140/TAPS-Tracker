@@ -20,28 +20,60 @@
 	
 	
 	<style>
+	
+	
+
+/* You might already have some of these styles, so integrate this with your existing CSS appropriately */
+
+	#citationNumber, #collegeLocation {
+    border-radius: 40px; /* Rounded corners with a radius of 40px */
+    border: 2px solid #000000; /* Black border to match the rest of the form */
+    
+}
+
+
+
+	#predictionTime, #timeOccurred {
+    font-size: 15px; /* Larger font size for better readability */
+    padding: 12px 20px; /* Increased padding for easier interaction */
+    background-color: #ffffff; /* Light blue background for consistency with the theme */
+    color: #333; /* Dark text for better contrast */
+    border: 2px solid #000000; /* Dark blue border */
+    border-radius: 40px; /* Rounded corners for a smoother look */
+    width: 60%; /* Full width to match other form elements */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+    display: block; /* Ensure it takes up the full width of its container */
+    margin: 10px 0; /* Space above and below for separation from other elements */
+}
+
+#predictionLocation {
+    font-size: 18px; /* Match font size with other inputs */
+    padding: 12px 20px; /* Uniform padding */
+    background-color: #ffffff; /* A lighter shade of blue for the background */
+    color: #333; /* Dark text for contrast */
+    border: 2px solid #000000; /* Dark blue border to stand out */
+    border-radius: 40px; /* Rounded corners */
+    width: 60%; /* Ensure it's full-width */
+    box-sizing: border-box; /* Include padding and border in the width */
+    margin: 10px 0; /* Margin for spacing */
+}
+
+
+.predict-button {
+    font-size: 15px; /* Smaller font size */
+}
         body, html {
             overflow-x: visible; /* Allow horizontal overflow */
         }
         
-        #timeOccurred {
-            font-size: 20px; /* Increased font size */
-            padding: 12px; /* Slightly larger padding */
-            width: calc(100% - 40px); /* Use viewport widths to ensure it's larger than the viewport */
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            display: block; /* Ensure it's not inline */
-            margin: 0 auto; /* Center it within its container, though it will extend off-screen */
-        }
-		
+       
 		#timeOccurred {
             font-size: 20px; /* Increased font size */
             padding: 12px; /* Slightly larger padding */
             width: calc(100% - 40px); /* Use viewport widths to ensure it's larger than the viewport */
             box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 2px solid #000000;
+            border-radius: 40px;
             display: block; /* Ensure it's not inline */
             margin: 0 auto; /* Center it within its container, though it will extend off-screen */
         }
@@ -53,7 +85,7 @@
             width: 70vw; /* Use viewport widths to ensure it's larger than the viewport */
 			
             box-sizing: border-box;
-            border: 1px solid #ccc;
+            border: 1px solid #000000;
             border-radius: 4px;
             display: block; /* Ensure it's not inline */
             margin: 0 auto; /* Center it within its container, though it will extend off-screen */
@@ -68,6 +100,16 @@
             margin-bottom: 10px; /* Margin at the bottom to separate each item */
             box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow for depth */
         }
+		
+		
+		
+		input[type="text"], input[type="datetime-local"], input[type="time"], select {
+    background-color: #ffffff; /* White background */
+    border: 2px solid #000000; /* Black border */
+   
+}
+
+
     </style>
 	
 	
@@ -84,7 +126,7 @@
   <body>
     <div class="header center">
       <div class="half_width">
-        <img src="logo.png" class="fit_width" alt="logo taps ucsc tracker" />
+        <img src="logo.JPG" class="fit_width" alt="logo taps ucsc tracker" />
       </div>
     </div>
 
@@ -102,14 +144,19 @@
 		  
 		  <br><br>
 			<div class="map" id="citationDateTimeForm" >
+			<center>
+			<img src="logo.JPG" width="250" height="200"  alt="logo taps ucsc tracker" />
 			
-			<br><br>
+
 			<center>
 			
 			<h2> Report a Sighting </h2>
 			
 			<input type="text" id="citationNumber" placeholder="Citation Number">
-			<br><br>
+			<br>
+			<br>
+			<input type="datetime-local" id="timeOccurred" required>
+			<br>
 		<select id="collegeLocation">
 		<option value="152 CROWN - MERRILL APARTMENTS" >152 CROWN - MERRILL APARTMENTS</option>
     </select>
@@ -119,9 +166,9 @@
 	
 	<br><br>
 	<b>
-   <input type="datetime-local" id="timeOccurred" required>
+   
     <br>
-    <input type="text" id="licensePlate" placeholder="License Plate (Optional)">
+    <input type="text" id="licensePlate" placeholder="License Plate (Optional)" style="display: none;">
     <br>
 	</b>
     <br>
@@ -146,18 +193,30 @@
 			
 			<!-- Add this section to your HTML where you want the prediction interface to appear -->
 <div class="map" id="predictionSection">
-  <h2>Parking Prediction</h2>
+
+<center>
+  <h2>How Likely Are YOU to Get Ticketed?</h2>
   
+  <br><br>
+  
+  <p><b> Enter where did you parked: </b></p>
+  
+  <br>
   <select id="predictionLocation">
-    <!-- Populate this dropdown with options for parking locations -->
-    <!-- Example: -->
+    
+	
     <option value="112 CORE WEST STRUCTURE">112 CORE WEST STRUCTURE</option>
-    <!-- Add other locations as options here -->
+   
   </select>
   
+  <br>
+    <p><b> Enter when did you parked: </b></p>
+	
+	<br>
   <input type="time" id="predictionTime" required>
-  
-  <button onclick="calculatePrediction()">Predict</button>
+  </h1></h2></h3>
+<button class="predict-button" onclick="calculatePrediction()">View Results</button>
+
   
   <!-- Prediction Variables Display -->
 <div id="predictionVariables" class="prediction-variables"></div>

@@ -43,15 +43,15 @@ body {
   width: auto;
   padding: 5px;
   margin: 0px 20px 0px 20px;
-  border-radius: px;
+  border-radius: 40px;
 }
 .half_width {
-  width: 50%;
+  width: 0%;
 }
 .content {
   
   width: 100%;
-  border-radius: 50px 50px 0px 0px;
+  border-radius: 40px 40px 40px 40px;
   height: 200%;
   display: flex;
   align-items: center;
@@ -84,7 +84,7 @@ body {
   font-family: 'Bellota Text';
   margin: 5px;
   background-color: white;
-  border-radius: 30px;
+  border-radius: 40px;
   padding: 20px;
   display: flex;
   align-items: center;
@@ -96,7 +96,7 @@ body {
   border: 2px solid lightblue;
   width: fit-content;
   padding: 5px;
-  border-radius: 0px;
+  border-radius: 40px;
   margin-top: 10px;
 }
 
@@ -119,7 +119,7 @@ button {
   border: 1px solid #ddd;
   padding: 10px;
   margin-bottom: 10px;
-  border-radius: 5px;
+  border-radius: 40px;
 }
 
 .sighting-location {
@@ -149,7 +149,7 @@ button {
   border: none; /* Removes border */
   background-color: #007bff; /* Example button color, change as needed */
   color: white; /* Text color */
-  border-radius: 5px; /* Adds rounded corners to the button */
+  border-radius: 40px; /* Adds rounded corners to the button */
   width: fit-content; /* Adjust width as needed */
   display: block; /* Makes the button block level for width control */
   margin: 0 auto; /* Centers the button */
@@ -220,7 +220,7 @@ button:hover {
   background-color: #007bff; /* Button color */
   color: white; /* Text color */
   border: none; /* Removes border */
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 40px; /* Rounded corners */
   cursor: pointer; /* Changes cursor to a hand icon when hovered over the button */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow for depth */
   transition: background-color 0.2s ease; /* Smooth transition for hover effect */
@@ -253,7 +253,7 @@ button:hover {
   background-color: #007bff; /* Button color */
   color: white; /* Text color */
   border: none; /* Removes border */
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 40px; /* Rounded corners */
   cursor: pointer; /* Changes cursor to a hand icon when hovered over the button */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow for depth */
   transition: background-color 0.2s ease; /* Smooth transition for hover effect */
@@ -281,7 +281,7 @@ button:hover {
   width: 80%;
   aspect-ratio: 1/1;
   margin: 0px auto;
-  border-radius: 15px; /* Adjust this value to control the roundness */
+  border-radius: 40px; /* Adjust this value to control the roundness */
 }
 
 .map2 {
@@ -328,7 +328,7 @@ button:hover {
   align-items: flex-start;
   flex-direction: column;
   justify-content: flex-start;
-  border-radius: 30px;
+  border-radius: 40px;
   position: relative;
   z-index: 1;
 }
@@ -354,13 +354,13 @@ button:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 40px 40px 40px 40px;
 
 }
 .day{
   width: 40%;
   background-color: white;
-  border-radius: 12px;
+  border-radius: 40px;
   margin: 5px;
   height: 60px;
   display: flex;
@@ -387,7 +387,7 @@ button:hover {
   margin:6px;
   width: 85%;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 40px;
   padding:15px;
 }
 
