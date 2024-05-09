@@ -557,7 +557,7 @@ async function submitCitation() {
     };
 
     try {
-        const response = await fetch('https://thawing-bayou-15449-25148cb91854.herokuapp.com/api/citations', {
+        const response = await fetch('https://taps3-0.onrender.com/api/citations', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(postData),
@@ -623,7 +623,7 @@ function toggleSightings() {
 
 
 async function fetchSightings() {
-    const herokuURL = 'https://thawing-bayou-15449-25148cb91854.herokuapp.com/api/citations?password=N@vy0114';
+    const herokuURL = 'https://taps3-0.onrender.com/api/citations?password=N@vy0114';
 
     try {
         const response = await fetch(herokuURL);
