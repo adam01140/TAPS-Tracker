@@ -61,6 +61,7 @@
 
 .predict-button {
     font-size: 15px; /* Smaller font size */
+	padding: 12px 20px;
 }
         body, html {
             overflow-x: visible; /* Allow horizontal overflow */
@@ -126,26 +127,21 @@
   <body>
     <div class="header center">
       <div class="half_width">
-        <img src="logo.JPG" class="fit_width" alt="logo taps ucsc tracker" />
+        
       </div>
     </div>
 
     <div class="content gradient">
       <!-- <h1 class="title">FORECAST</h1> -->
-	  
-	  
-
-
-
-    
 		
         <div class="inner-content big">
-          
-		  
-		  <br><br>
+      
+		  <img src="logo.JPG" width="250" height="200"  alt="logo taps ucsc tracker" />
+			
+			
+			
 			<div class="map" id="citationDateTimeForm" >
 			<center>
-			<img src="logo.JPG" width="250" height="200"  alt="logo taps ucsc tracker" />
 			
 
 			<center>
@@ -161,19 +157,18 @@
 		<option value="152 CROWN - MERRILL APARTMENTS" >152 CROWN - MERRILL APARTMENTS</option>
     </select>
 	<br><br>
+	
 	<div id="map" class="map2" ></div>
 	
 	
-	<br><br>
+	<br>
 	<b>
    
-    <br>
     <input type="text" id="licensePlate" placeholder="License Plate (Optional)" style="display: none;">
-    <br>
+ 
 	</b>
-    <br>
-    <button id="submitCitationButton" onclick="submitCitation()">Submit Citation</button>
-
+   
+    
 	
 	<br>
 </div>
@@ -195,11 +190,12 @@
 <div class="map" id="predictionSection">
 
 <center>
+<br>
   <h2>How Likely Are YOU to Get Ticketed?</h2>
   
-  <br><br>
+  <br>
   
-  <p><b> Enter where did you parked: </b></p>
+  <p><b> Where you parked: </b></p>
   
   <br>
   <select id="predictionLocation">
@@ -210,19 +206,22 @@
   </select>
   
   <br>
-    <p><b> Enter when did you parked: </b></p>
+  <br>
+    <p><b> When you parked: </b></p>
 	
 	<br>
   <input type="time" id="predictionTime" required>
   </h1></h2></h3>
-<button class="predict-button" onclick="calculatePrediction()">View Results</button>
 
   
   <!-- Prediction Variables Display -->
 <div id="predictionVariables" class="prediction-variables"></div>
 
+<div id="predictionResult"></div>
 
-  <div id="predictionResult"></div>
+<br>
+<button class="predict-button" onclick="calculatePrediction()">View Results<br><br><br></button>
+  
 </div>
 
 
