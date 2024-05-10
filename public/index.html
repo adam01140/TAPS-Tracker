@@ -707,16 +707,20 @@ function prepareDataForGraph(selectedLocation) {
 
 function plotGraph(data, selectedLocation) {
     const ctx = document.getElementById('hourlyCitationChart').getContext('2d');
-    // Create labels shifted by 7 hours
+    // Create labels shifted by 7 hours and format them in 12-hour time format
     const labels = Array.from({ length: 24 }, (_, i) => {
-        let shiftedHour = (i + 7) % 24;
-        return `${shiftedHour}:00`;
+        let shiftedHour = (i + 7) % 24; // Calculate the shifted hour
+        const amPm = shiftedHour >= 12 ? 'PM' : 'AM'; // Determine AM/PM
+        shiftedHour = shiftedHour % 12 || 12; // Convert 24-hour time to 12-hour format
+        return `${shiftedHour}:00 ${amPm}`; // Return formatted label
     });
+
     if (window.myBarChart) {
         window.myBarChart.destroy(); // Destroy existing chart instance if it exists
     }
+
     window.myBarChart = new Chart(ctx, {
-        type: 'line', // Change type to 'line'
+        type: 'line', // Use a line chart
         data: {
             labels: labels,
             datasets: [{
@@ -725,7 +729,7 @@ function plotGraph(data, selectedLocation) {
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1,
-                tension: 0.4 // Set tension to create a smooth curve
+                tension: 0.4 // Smooth the line
             }]
         },
         options: {
@@ -737,7 +741,6 @@ function plotGraph(data, selectedLocation) {
         }
     });
 }
-
 
 
 // Call this function to populate the dropdown after defining it
