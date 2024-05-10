@@ -195,7 +195,7 @@
 
 <center>
 <br>
-  <h2>How Likely Are YOU to Get Ticketed?</h2>
+  <h2>Parking Statistics</h2>
   
   <br>
   
@@ -673,16 +673,16 @@ function calculatePrediction() {
     const selectedLocation = document.getElementById('predictionLocation').value;
     var selectedHour = parseInt(document.getElementById('predictionTime').value.split(':')[0], 10);
 	selectedHour = selectedHour - 2
+	
     const citationsAtLocation = allSightings.filter(sighting => sighting.college === selectedLocation);
     const citationsAtLocationAndTime = citationsAtLocation.filter(sighting => {
-        // Correct the date format and handle potential parsing errors
         const correctedDateStr = correctDateFormat(sighting.time_exact);
         const sightingTime = new Date(correctedDateStr);
         if (isNaN(sightingTime.getTime())) {
-            console.log("Invalid date detected:", sighting.time_exact);
-            return false;
+            console.log(`Invalid date detected: ${sighting.time_exact}, Citation #${sighting.citationNumber}`);
+            return false; // Ensure this returns false to not count in the hour-specific filter
         }
-        sightingTime.setHours(sightingTime.getHours() + 5);  // Adding 5 hours
+        sightingTime.setHours(sightingTime.getHours() + 5); // Adjust time by 5 hours
         return sightingTime.getHours() === selectedHour;
     });
 
@@ -701,9 +701,9 @@ function calculatePrediction() {
             const sightingTime = new Date(correctedDateStr);
             if (!isNaN(sightingTime.getTime())) {
                 sightingTime.setHours(sightingTime.getHours() + 7); // Adjust time
-                resultsHtml += `<li>${sightingTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</li>`;
+                resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - ${sightingTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</li>`;
             } else {
-                resultsHtml += "<li>Invalid date format</li>";
+                resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - Invalid date format</li>`;
             }
         });
         resultsHtml += "</ul>";
@@ -715,12 +715,18 @@ function calculatePrediction() {
 }
 
 function correctDateFormat(dateStr) {
-    // Split the date string on hyphens and 'T' to isolate parts
     let parts = dateStr.split('T');
     if (parts.length < 2) {
         return dateStr; // Return original if split fails
     }
-    let dateParts = parts[0].split('-').map(part => part.padStart(2, '0')); // Zero-pad date parts
+    let dateParts = parts[0].split('-');
+    if (dateParts[1] > 12) { // This checks if the month part is greater than 12, indicating a swap might be needed
+        // Swap month and day if day appears in the month position
+        let temp = dateParts[1];
+        dateParts[1] = dateParts[2];
+        dateParts[2] = temp;
+    }
+    dateParts = dateParts.map(part => part.padStart(2, '0')); // Zero-pad date parts
     let correctedDateStr = `${dateParts.join('-')}T${parts[1]}`;
     return correctedDateStr;
 }
