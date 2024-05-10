@@ -224,6 +224,12 @@
 <div id="predictionResult"></div>
 
 <br>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<canvas id="hourlyCitationChart" width="400" height="400"></canvas>
+
+
+
 <button class="predict-button" onclick="calculatePrediction()">View Results<br><br><br></button>
   
 </div>
@@ -630,10 +636,10 @@ function toggleSightings() {
 
 
 
+
 async function fetchSightings() {
-    const herokuURL = 'https://taps-2-0.onrender.com/api/citations?password=N@vy0114';
+    const response = await fetch('https://taps-2-0.onrender.com/api/citations?password=N@vy0114');
     try {
-        const response = await fetch(herokuURL);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -642,15 +648,18 @@ async function fetchSightings() {
             college: sighting.locationOccurred || 'Unavailable',
             time_exact: sighting.timeOccurred || 'Unavailable',
             citationNumber: sighting.citationNumber || 'Unavailable',
-            licensePlate: sighting.licensePlate || 'Unavailable',
+            licensePlate: sighting.licensePlate || 'Unavailable'
         }));
-
         displaySightings();
-        populatePredictionLocationDropdown(); // Populate dropdown after data fetch
+        populatePredictionLocationDropdown();
+        // If you use the chart, make sure this function is defined
     } catch (error) {
         console.error("Error fetching sightings:", error);
     }
 }
+
+
+
 
 function populatePredictionLocationDropdown() {
     const selectElement = document.getElementById("predictionLocation");
@@ -667,10 +676,84 @@ function populatePredictionLocationDropdown() {
     });
 }
 
+
+
+
+
+
+
+
+
+
+function prepareDataForGraph(selectedLocation) {
+    const hoursArray = new Array(24).fill(0);
+    allSightings.forEach(sighting => {
+        if (sighting.college === selectedLocation && sighting.time_exact !== 'Unavailable') {
+            const correctedTime = correctDateFormat(sighting.time_exact);
+            const date = new Date(correctedTime);
+            console.log(`Parsed Date: ${date} for corrected time: ${correctedTime}`); // Check parsed date
+            const hour = date.getHours();
+            console.log(`Hour Extracted: ${hour}`); // Check hour extraction
+            if (!isNaN(hour)) {
+                hoursArray[hour]++;
+            }
+        }
+    });
+    console.log("Data prepared for graph:", hoursArray); // Log the prepared data
+    return hoursArray;
+}
+
+
+
+function plotGraph(data, selectedLocation) {
+    const ctx = document.getElementById('hourlyCitationChart').getContext('2d');
+    // Create labels shifted by 7 hours
+    const labels = Array.from({ length: 24 }, (_, i) => {
+        let shiftedHour = (i + 7) % 24;
+        return `${shiftedHour}:00`;
+    });
+    if (window.myBarChart) {
+        window.myBarChart.destroy(); // Destroy existing chart instance if exists
+    }
+    window.myBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: `Number of Citations at ${selectedLocation}`,
+                data: data,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+
 // Call this function to populate the dropdown after defining it
 populatePredictionLocationDropdown();
 function calculatePrediction() {
-    const selectedLocation = document.getElementById('predictionLocation').value;
+
+
+const selectedLocation = document.getElementById('predictionLocation').value;
+    const citationDataByHour = prepareDataForGraph(selectedLocation);
+
+    if (citationDataByHour.every(item => item === 0)) {
+        console.log("No citation data available for the selected hour and location.");
+    } else {
+        plotGraph(citationDataByHour, selectedLocation);
+    }
+	
+	
+    
     var selectedHour = parseInt(document.getElementById('predictionTime').value.split(':')[0], 10);
 	selectedHour = selectedHour - 2
 	
@@ -690,6 +773,8 @@ function calculatePrediction() {
     const countCitationsAtLocationAndTime = citationsAtLocationAndTime.length;
     const percentChance = countCitationsAtLocation > 0 ? (countCitationsAtLocationAndTime / countCitationsAtLocation * 100).toFixed(2) : 0;
 
+
+	
     let resultsHtml = `Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>`;
     resultsHtml += `Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}<br>`;
     resultsHtml += `Your chances of getting a ticket are <b>${percentChance}%</b><br>`;
@@ -712,6 +797,8 @@ function calculatePrediction() {
     }
 
     document.getElementById('predictionResult').innerHTML = resultsHtml;
+	
+	
 }
 
 function correctDateFormat(dateStr) {
