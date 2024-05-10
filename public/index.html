@@ -624,17 +624,20 @@ function toggleSightings() {
 
 
 
+
+
+
+
+
+
 async function fetchSightings() {
     const herokuURL = 'https://taps-2-0.onrender.com/api/citations?password=N@vy0114';
-
     try {
         const response = await fetch(herokuURL);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-
-        // Assuming the data structure is similar, otherwise, adjust the mapping accordingly
         allSightings = data.map(sighting => ({
             college: sighting.locationOccurred || 'Unavailable',
             time_exact: sighting.timeOccurred || 'Unavailable',
@@ -643,27 +646,25 @@ async function fetchSightings() {
         }));
 
         displaySightings();
+        populatePredictionLocationDropdown(); // Populate dropdown after data fetch
     } catch (error) {
         console.error("Error fetching sightings:", error);
     }
 }
 
-
-
-
-
-
-
-
-
 function populatePredictionLocationDropdown() {
-  const selectElement = document.getElementById("predictionLocation");
-  colleges.forEach(college => {
-    const option = document.createElement("option");
-    option.value = college.name;
-    option.textContent = college.name;
-    selectElement.appendChild(option);
-  });
+    const selectElement = document.getElementById("predictionLocation");
+    selectElement.innerHTML = ''; // Clear existing options
+    let uniqueColleges = new Set(allSightings.map(sighting => sighting.college)); // Get unique colleges
+
+    uniqueColleges.forEach(college => {
+        if (college !== 'Unavailable') { // Avoid adding 'Unavailable' as an option
+            const option = document.createElement("option");
+            option.value = college;
+            option.textContent = college;
+            selectElement.appendChild(option);
+        }
+    });
 }
 
 // Call this function to populate the dropdown after defining it
