@@ -713,10 +713,10 @@ function plotGraph(data, selectedLocation) {
         return `${shiftedHour}:00`;
     });
     if (window.myBarChart) {
-        window.myBarChart.destroy(); // Destroy existing chart instance if exists
+        window.myBarChart.destroy(); // Destroy existing chart instance if it exists
     }
     window.myBarChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line', // Change type to 'line'
         data: {
             labels: labels,
             datasets: [{
@@ -724,7 +724,8 @@ function plotGraph(data, selectedLocation) {
                 data: data,
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
+                borderWidth: 1,
+                tension: 0.4 // Set tension to create a smooth curve
             }]
         },
         options: {
@@ -736,6 +737,7 @@ function plotGraph(data, selectedLocation) {
         }
     });
 }
+
 
 
 // Call this function to populate the dropdown after defining it
