@@ -669,46 +669,61 @@ function populatePredictionLocationDropdown() {
 
 // Call this function to populate the dropdown after defining it
 populatePredictionLocationDropdown();
-
-
-
 function calculatePrediction() {
     const selectedLocation = document.getElementById('predictionLocation').value;
-    const selectedHour = parseInt(document.getElementById('predictionTime').value.split(':')[0], 10);
-
+    var selectedHour = parseInt(document.getElementById('predictionTime').value.split(':')[0], 10);
+	selectedHour = selectedHour - 2
     const citationsAtLocation = allSightings.filter(sighting => sighting.college === selectedLocation);
-    console.log("All sighting times at location:", citationsAtLocation.map(s => s.time_exact));
-
     const citationsAtLocationAndTime = citationsAtLocation.filter(sighting => {
-        const sightingTimeStr = sighting.time_exact.trim();
-        let sightingTime = new Date(sightingTimeStr);
-        let sightingHourUTC = sightingTime.getUTCHours();
-
-        // If parsing failed and sightingHourUTC is NaN, attempt manual parsing
-        if (isNaN(sightingHourUTC)) {
-            // Expected format: "YYYY-MM-DDTHH:MM:SSZ"
-            const parts = sightingTimeStr.split('T');
-            if (parts.length === 2) {
-                const timeParts = parts[1].split(':');
-                if (timeParts.length > 0) {
-                    sightingHourUTC = parseInt(timeParts[0], 10);
-                }
-            }
+        // Correct the date format and handle potential parsing errors
+        const correctedDateStr = correctDateFormat(sighting.time_exact);
+        const sightingTime = new Date(correctedDateStr);
+        if (isNaN(sightingTime.getTime())) {
+            console.log("Invalid date detected:", sighting.time_exact);
+            return false;
         }
-
-        console.log(`Checking citation time: ${sightingTimeStr}, Hour: ${sightingHourUTC}`);
-        return sightingHourUTC === selectedHour;
+        sightingTime.setHours(sightingTime.getHours() + 5);  // Adding 5 hours
+        return sightingTime.getHours() === selectedHour;
     });
 
     const countCitationsAtLocation = citationsAtLocation.length;
     const countCitationsAtLocationAndTime = citationsAtLocationAndTime.length;
-	const percent = (countCitationsAtLocationAndTime)/(countCitationsAtLocation)*100
+    const percentChance = countCitationsAtLocation > 0 ? (countCitationsAtLocationAndTime / countCitationsAtLocation * 100).toFixed(2) : 0;
 
-    document.getElementById('predictionResult').innerHTML = `Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>
-        Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime} <br>
-		Your chances of getting a ticket are <b> ${percent}%`;
+    let resultsHtml = `Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>`;
+    resultsHtml += `Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}<br>`;
+    resultsHtml += `Your chances of getting a ticket are <b>${percentChance}%</b><br>`;
+
+    if (citationsAtLocation.length > 0) {
+        resultsHtml += "<ul>";
+        citationsAtLocation.forEach(sighting => {
+            const correctedDateStr = correctDateFormat(sighting.time_exact);
+            const sightingTime = new Date(correctedDateStr);
+            if (!isNaN(sightingTime.getTime())) {
+                sightingTime.setHours(sightingTime.getHours() + 7); // Adjust time
+                resultsHtml += `<li>${sightingTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</li>`;
+            } else {
+                resultsHtml += "<li>Invalid date format</li>";
+            }
+        });
+        resultsHtml += "</ul>";
+    } else {
+        resultsHtml += "No citations have been recorded at this location.";
+    }
+
+    document.getElementById('predictionResult').innerHTML = resultsHtml;
 }
 
+function correctDateFormat(dateStr) {
+    // Split the date string on hyphens and 'T' to isolate parts
+    let parts = dateStr.split('T');
+    if (parts.length < 2) {
+        return dateStr; // Return original if split fails
+    }
+    let dateParts = parts[0].split('-').map(part => part.padStart(2, '0')); // Zero-pad date parts
+    let correctedDateStr = `${dateParts.join('-')}T${parts[1]}`;
+    return correctedDateStr;
+}
 
 
 
