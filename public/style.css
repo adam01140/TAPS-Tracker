@@ -276,6 +276,15 @@ button:hover {
 
 
 
+
+.report {
+  border: 5px solid lightblue;
+  width: 80%;
+  
+  border-radius: 40px; /* Adjust this value to control the roundness */
+}
+
+
 .map, .map2, .cite {
   border: 5px solid lightblue;
   width: 80%;

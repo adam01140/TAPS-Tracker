@@ -140,7 +140,7 @@
 			
 			
 			
-			<div class="map" id="citationDateTimeForm" >
+			<div class="report" id="citationDateTimeForm" >
 			<center>
 			
 
@@ -154,10 +154,10 @@
 			<input type="datetime-local" id="timeOccurred" required>
 			<br>
 		<select id="collegeLocation">
-		<option value="152 CROWN - MERRILL APARTMENTS" >152 CROWN - MERRILL APARTMENTS</option>
+		<option value="COLLEGE NINE" >COLLEGE NINE</option>
     </select>
 	<br><br>
-	<div id="map" class="map2" ></div>
+	<div id="map" class="map2" style="display: none;"></div>
 	<br>
 	<button id="submitCitationButton" onclick="submitCitation()">Submit Citation</button>
 
@@ -226,7 +226,7 @@
 
 <button class="predict-button" onclick="calculatePrediction()">View Results<br><br><br></button>
 <br>
-<canvas id="hourlyCitationChart" width="400" height="400"></canvas>
+<canvas id="hourlyCitationChart" width="300" height="200"></canvas>
 
 
 
@@ -248,7 +248,10 @@
 
 
 <h1><center> Recent Citations: </h1>
-<div id="forecastMap" class="map"></div>	
+
+
+<!-- <div id="forecastMap" class="map"></div>	-->
+
 <center>
 <br>
 <button id="toggleSightingsButton" onclick="toggleSightingsDisplay()"> Show More</button>
@@ -372,7 +375,7 @@ let map2;
 var colleges = [
 
 
-	{name: "152 CROWN - MERRILL APARTMENTS", lat: 7.002128, lng: -122.053512 },
+	{name: "153 CROWN - MERRILL APARTMENTS", lat: 7.002128, lng: -122.053512 },
 	{name: "154 CROWN - MERRILL APARTMENTS", lat: 37.002163, lng: -122.054817 },
 	{name: "111B CROWN COLLEGE CIRCLE", lat: 37.001089, lng: -122.054401 },
 	{name: "111A CROWN COLLEGE CIRCLE", lat: 37.000628, lng: -122.054770 },
@@ -760,7 +763,7 @@ const selectedLocation = document.getElementById('predictionLocation').value;
 	
     
     var selectedHour = parseInt(document.getElementById('predictionTime').value.split(':')[0], 10);
-	selectedHour = selectedHour - 2
+	selectedHour = selectedHour
 	
     const citationsAtLocation = allSightings.filter(sighting => sighting.college === selectedLocation);
     const citationsAtLocationAndTime = citationsAtLocation.filter(sighting => {
@@ -770,7 +773,7 @@ const selectedLocation = document.getElementById('predictionLocation').value;
             console.log(`Invalid date detected: ${sighting.time_exact}, Citation #${sighting.citationNumber}`);
             return false; // Ensure this returns false to not count in the hour-specific filter
         }
-        sightingTime.setHours(sightingTime.getHours() + 5); // Adjust time by 5 hours
+        sightingTime.setHours(sightingTime.getHours()); // Adjust time by 5 hours
         return sightingTime.getHours() === selectedHour;
     });
 
@@ -783,7 +786,7 @@ const selectedLocation = document.getElementById('predictionLocation').value;
     let resultsHtml = ``;
 	//let resultsHtml = `Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>`;
     //resultsHtml += `Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}<br>`;
-    resultsHtml += `<br> Your chances of getting a ticket are <b>${percentChance}%</b>`;
+    resultsHtml += ` <br> Your chances of getting a ticket at that time are <b>${percentChance}%</b>`;
 
     if (citationsAtLocation.length > 0) {
         resultsHtml += "<ul>";
@@ -902,7 +905,7 @@ function displaySightings() {
             sightingMarkers.push(marker);
         }
     });
-
+calculatePrediction()
     document.getElementById("toggleSightingsButton").textContent = showingAllSightings ? "Show Less" : "Show More";
 }
 
