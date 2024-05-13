@@ -259,6 +259,16 @@
 	<script>
 	
 	
+	
+	var http = require("http");
+setInterval(function() {
+    http.get("https://taps-2-0.onrender.com/");
+}, 300000); // every 5 minutes (300000)
+
+
+
+
+	
 	var firebaseConfig = {
     apiKey: "AIzaSyAgYdoZnSv5ekxngv_ue61aFZUGcRlphok",
   authDomain: "defundtaps.firebaseapp.com",

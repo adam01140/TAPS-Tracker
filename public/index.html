@@ -114,7 +114,7 @@
     </style>
 	
 	
-	
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
@@ -195,11 +195,11 @@
 
 <center>
 <br>
-  <h2>Parking Statistics</h2>
+  <h2>Where Should You Park</h2>
   
   <br>
   
-  <p><b> Where you parked: </b></p>
+  <p><b> Where you want to park: </b></p>
   
   <br>
   <select id="predictionLocation">
@@ -211,26 +211,26 @@
   
   <br>
   <br>
-    <p><b> When you parked: </b></p>
+    <p><b> When you want parked: </b></p>
 	
 	<br>
   <input type="time" id="predictionTime" required>
   </h1></h2></h3>
 
-  
-  <!-- Prediction Variables Display -->
-<div id="predictionVariables" class="prediction-variables"></div>
 
-<div id="predictionResult"></div>
+<div id="predictionVariables" class="prediction-variables" ></div>
+
+<div id="predictionResult" ></div>
 
 <br>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<button class="predict-button" onclick="calculatePrediction()">View Results<br><br><br></button>
+<br>
 <canvas id="hourlyCitationChart" width="400" height="400"></canvas>
 
 
 
-<button class="predict-button" onclick="calculatePrediction()">View Results<br><br><br></button>
+
   
 </div>
 
@@ -780,9 +780,10 @@ const selectedLocation = document.getElementById('predictionLocation').value;
 
 
 	
-    let resultsHtml = `Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>`;
-    resultsHtml += `Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}<br>`;
-    resultsHtml += `Your chances of getting a ticket are <b>${percentChance}%</b><br>`;
+    let resultsHtml = ``;
+	//let resultsHtml = `Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>`;
+    //resultsHtml += `Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}<br>`;
+    resultsHtml += `<br> Your chances of getting a ticket are <b>${percentChance}%</b>`;
 
     if (citationsAtLocation.length > 0) {
         resultsHtml += "<ul>";
@@ -791,9 +792,9 @@ const selectedLocation = document.getElementById('predictionLocation').value;
             const sightingTime = new Date(correctedDateStr);
             if (!isNaN(sightingTime.getTime())) {
                 sightingTime.setHours(sightingTime.getHours() + 7); // Adjust time
-                resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - ${sightingTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</li>`;
+                //resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - ${sightingTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</li>`;
             } else {
-                resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - Invalid date format</li>`;
+                //resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - Invalid date format</li>`;
             }
         });
         resultsHtml += "</ul>";
