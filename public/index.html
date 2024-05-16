@@ -19,24 +19,15 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
 
 <style>
+        /* Make dropdown text bold */
+        select option {
+            font-weight: bold;
+        }
 
-
-/* Make dropdown text bold */
-select option {
-    font-weight: bold;
-}
-
-/* Make placeholder text in textboxes bold */
-::placeholder {
-    font-weight: bold;
-}
-
-
-
-        /* Ensure both input and select elements are centered */
-        /* Ensure both input and select elements are centered */
-
-
+        /* Make placeholder text in textboxes bold */
+        ::placeholder {
+            font-weight: bold;
+        }
 
         /* Adjust input elements styling */
         #predictionTime, #timeOccurred {
@@ -48,27 +39,24 @@ select option {
             border-radius: 40px; /* Rounded corners for a smoother look */
             width: 30%; /* Full width to match other form elements */
             height: 50px;
-	font-weight: bold;
+            font-weight: bold;
             display: block; /* Ensure it takes up the full width of its container */
             text-align: center; /* Center text horizontally */
         }
 
         /* Adjust prediction location styling */
         #predictionLocation {
-
-		font-weight: bold;
+            font-weight: bold;
             font-size: 25px; /* Match font size with other inputs */
             padding: 12px 20px; /* Uniform padding */
             background-color: #ffffff; /* A lighter shade of blue for the background */
             color: #333; /* Dark text for contrast */
             height: 60px;
-			border: 3px solid #000000; /* Dark blue border to stand out */
+            border: 3px solid #000000; /* Dark blue border to stand out */
             border-radius: 40px; /* Rounded corners */
             width: 50%; /* Ensure it's full-width */
- 
             text-align: center; /* Center text horizontally */
             display: block;
-            
         }
 
         .predict-button {
@@ -102,208 +90,191 @@ select option {
             display: block; /* Ensure it's not inline */
             margin: 0 auto; /* Center it within its container, though it will extend off-screen */
             text-align: center; /* Center text horizontally */
-			margin-top: 20px;
+            margin-top: 20px;
         }
-
-        
 
         .item {
             background-color: #f0f0f0; /* Light grey background */
-			text-align: center;
+            text-align: center;
             border-radius: 40px; /* Rounded corners */
             padding: 10px; /* Some padding inside the div */
             margin-bottom: 10px; /* Margin at the bottom to separate each item */
             box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow for depth */
         }
+		
 
         input[type="text"], input[type="datetime-local"], input[type="time"], select {
             background-color: #ffffff; /* White background */
-			color: #000000
+            color: #000000; /* Black text color */
             border: 3px solid #000000; /* Black border */
             text-align: center; /* Center text horizontally */
+        }
+
+        /* Make dropdown text bold */
+        select option {
+            font-weight: bold;
+        }
+
+        /* Make placeholder text in textboxes bold */
+        ::placeholder {
+            font-weight: bold;
+        }
+
+        /* Ensure both input and select elements are centered */
+        #citationNumber {
+		
+            color: #000000; /* Black text color */
+            font-size: 40px; /* Increased font size */
+            border-radius: 40px; /* Rounded corners with a radius of 40px */
+            border: 3px solid #000000; /* Black border to match the rest of the form */
+            height: 60px;
+            text-align: center; /* Center text horizontally */
+            padding: 0; /* Remove default padding */
+            display: block;
+            margin: 10px auto; /* Center the element itself */
+            width: calc(100% - 20px); /* Ensure full width with some margin */
+            box-sizing: border-box;
+            -webkit-appearance: none; /* Ensure appearance is consistent across devices */
+            -moz-appearance: none;
+            appearance: none;
+            font-weight: bold; /* Make text bold */
+        }
+
+        #collegeLocation {
+            color: #000000;
+            font-size: 30px; /* Increased font size */
+            border-radius: 40px; /* Rounded corners with a radius of 40px */
+            border: 3px solid #000000; /* Black border to match the rest of the form */
+            height: 60px;
+            text-align: center; /* Center text horizontally */
+            padding: 10px; /* Remove default padding */
+            display: block;
+            margin: 10px auto; /* Center the element itself */
+            width: calc(100% - 20px); /* Ensure full width with some margin */
+            box-sizing: border-box;
+            -webkit-appearance: none; /* Ensure appearance is consistent across devices */
+            -moz-appearance: none;
+            appearance: none;
+            font-weight: bold; /* Make text bold */
+        }
+
+        /* Additional styles for the select element */
+        #collegeLocation {
+            background-position: right 30px center; /* Adjust background position for dropdown arrow */
+            background-repeat: no-repeat; /* Prevent background repetition */
+            text-align-last: center; /* Center the text for the last line */
+        }
+
+        /* Ensure the option elements inherit the font-weight */
+        #collegeLocation option {
+            font-weight: bold;
+        }
+
+        /* Styles for input elements */
+        input[type="text"], input[type="datetime-local"], input[type="time"], select {
+            background-color: #ffffff; /* White background */
+            border: 3px solid #000000; /* Black border */
+            text-align: center; /* Center text horizontally */
+            font-size: 20px; /* Increased font size */
+            font-weight: bold; /* Make text bold */
+        }
+
+        /* Specific style for time inputs */
+        input[type="time"] {
+            color: #89CFF0; /* Light blue text color */
+        }
+
+        /* Make placeholder text bold */
+        ::placeholder {
+            font-weight: bold;
+        }
+
+        /* Adjust submit button styling */
+        #submitCitationButton {
+            font-size: 20px; /* Increased font size */
+            padding: 1px;
+        }
+
+        body {
+            /* Gradient background */
+            background: linear-gradient(135deg, #89CFF0, #4682B4);
+            /* Fallback color for browsers that don't support gradients */
+            background-color: #89CFF0;
+            /* Ensure the background covers the entire page */
+            min-height: 100vh;
+            /* Font settings for body text */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #predictionSection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+			color: #000000
+        }
+
+        #wherewhen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px; /* Add some spacing between the select and input elements */
+        }
+
+        /* Media query for mobile devices */
+        @media (max-width: 600px) {
+            select, input[type="text"], input[type="datetime-local"], input[type="time"] {
+                width: calc(100% - 40px); /* Adjust width for mobile devices */
+                font-size: 18px; /* Adjust font size for better readability */
+                height: 50px; /* Adjust height for better display */
+            }
+
+            #report2 {
+                width: 90%; /* Adjust width for mobile devices */
+            }
+
+            .predict-button {
+				width: 30px;
+				margin-top: 5px;
+                font-size: 20px;
+				font-weight: bold;
+            }
+			
+			.toggleSightingsButton {
+				width: 30px;
+				margin-top: 5px;
+                font-size: 20px;
+				font-weight: bold;
+            }
+        }
+
+        button {
+		
+            margin-top: 0px;
+            height: 80px;
+            font-size: 20px;
+            cursor: pointer; /* Changes cursor to pointer when hovering over the button */
+            border: none; /* Removes border */
+            background-color: #007bff; /* Example button color, change as needed */
+            color: white; /* Text color */
+            border-radius: 40px; /* Adds rounded corners to the button */
+            width: 200px; /* Adjust width as needed */
+            display: block; /* Makes the button block level for width control */
+            margin: 0 auto; /* Centers the button */
         }
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/* Make dropdown text bold */
-select option {
-    font-weight: bold;
-}
-
-/* Make placeholder text in textboxes bold */
-::placeholder {
-    font-weight: bold;
-}
-
-/* Ensure both input and select elements are centered */
-#citationNumber {
-    color: #000000;
-    font-size: 40px; /* Increased font size */
-    border-radius: 40px; /* Rounded corners with a radius of 40px */
-    border: 3px solid #000000; /* Black border to match the rest of the form */
-    height: 60px;
-    text-align: center; /* Center text horizontally */
-    padding: 0; /* Remove default padding */
-    display: block;
-    margin: 10px auto; /* Center the element itself */
-    width: calc(100% - 20px); /* Ensure full width with some margin */
-    box-sizing: border-box;
-    -webkit-appearance: none; /* Ensure appearance is consistent across devices */
-    -moz-appearance: none;
-    appearance: none;
-    font-weight: bold; /* Make text bold */
+		#citationNumber {
+    color: #000000 !important; /* Ensure the text color is black */
 }
 
 
-
-#collegeLocation {
-    color: #000000;
-    font-size: 35px; /* Increased font size */
-    border-radius: 40px; /* Rounded corners with a radius of 40px */
-    border: 3px solid #000000; /* Black border to match the rest of the form */
-    height: 60px;
-    text-align: center; /* Center text horizontally */
-    padding: 10px; /* Remove default padding */
-    display: block;
-    margin: 10px auto; /* Center the element itself */
-    width: calc(100% - 20px); /* Ensure full width with some margin */
-    box-sizing: border-box;
-    -webkit-appearance: none; /* Ensure appearance is consistent across devices */
-    -moz-appearance: none;
-    appearance: none;
-    font-weight: bold; /* Make text bold */
-}
-
-
-/* Additional styles for the select element */
-#collegeLocation {
-    background-position: right 30px center; /* Adjust background position for dropdown arrow */
-    background-repeat: no-repeat; /* Prevent background repetition */
-    text-align-last: center; /* Center the text for the last line */
-}
-
-/* Ensure the option elements inherit the font-weight */
-#collegeLocation option {
-    font-weight: bold;
-}
-
-/* Styles for input elements */
-input[type="text"], input[type="datetime-local"], input[type="time"], select {
-    background-color: #ffffff; /* White background */
-    border: 3px solid #000000; /* Black border */
-    text-align: center; /* Center text horizontally */
-    font-size: 20px; /* Increased font size */
-    font-weight: bold; /* Make text bold */
-}
-
-/* Specific style for time inputs */
-input[type="time"] {
-    color: #89CFF0; /* Light blue text color */
-}
-
-/* Make placeholder text bold */
-::placeholder {
-    font-weight: bold;
-}
-
-/* Adjust submit button styling */
-#submitCitationButton {
-    font-size: 20px; /* Increased font size */
-    padding: 1px;
-}
-
-body {
-    /* Gradient background */
-    background: linear-gradient(135deg, #89CFF0, #4682B4);
-    /* Fallback color for browsers that don't support gradients */
-    background-color: #89CFF0;
-    /* Ensure the background covers the entire page */
-    min-height: 100vh;
-    /* Font settings for body text */
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#predictionSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#wherewhen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px; /* Add some spacing between the select and input elements */
-}
-
-/* Media query for mobile devices */
-@media (max-width: 600px) {
-    select, input[type="text"], input[type="datetime-local"], input[type="time"] {
-        width: calc(100% - 40px); /* Adjust width for mobile devices */
-        font-size: 18px; /* Adjust font size for better readability */
-        height: 50px; /* Adjust height for better display */
-    }
-
-    #report2 {
-        width: 90%; /* Adjust width for mobile devices */
-    }
-
-    .predict-button {
-        font-size: 18px;
-    }
-}
-
-
-
-
-button {
-  margin-top: 0px;
-  height: 80px;
-
-  font-size: 16px;
-
-  cursor: pointer; /* Changes cursor to pointer when hovering over the button */
-  border: none; /* Removes border */
-  background-color: #007bff; /* Example button color, change as needed */
-  color: white; /* Text color */
-  border-radius: 40px; /* Adds rounded corners to the button */
-  width: 200px; /* Adjust width as needed */
-  display: block; /* Makes the button block level for width control */
-  margin: 0 auto; /* Centers the button */
-}
 
     </style>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -349,7 +320,7 @@ button {
 		<option value="COLLEGE NINE" >COLLEGE NINE</option>
     </select>
 	<br>
-	<br>
+	
 			<input type="datetime-local" id="timeOccurred" required>
 			<br>
 	<br>
@@ -389,7 +360,7 @@ button {
 
   
   
-  <br><br>
+ 
   <p><b><h2> Enter where/when you parked: </b></p>
   
   <br>
@@ -406,18 +377,21 @@ button {
   <input type="time" id="predictionTime" required>
   </div>
   <br>
-  <button class="predict-button" onclick="calculatePrediction()"><h2><b>View Results</b></h2><br><br><br></button>
-  </h1></h2></h3>
+   </h1></h2></h3>
 
 
 <div id="predictionVariables" class="prediction-variables" ></div>
 
 <div id="predictionResult" ></div>
 
+<canvas id="hourlyCitationChart" width="500" height="300"></canvas>
+
+<button class="predict-button" onclick="calculatePrediction()"><h2><b>View Results</b></h2><br><br><br></button>
+ 
 
 
 <br>
-<canvas id="hourlyCitationChart" width="500" height="300"></canvas>
+
 
 
 
@@ -947,7 +921,7 @@ function plotGraph(data, selectedLocation) {
                 data: data,
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1,
+                borderWidth: 5,
                 tension: 0.4 // Smooth the line
             }]
         },
@@ -956,18 +930,30 @@ function plotGraph(data, selectedLocation) {
                 y: {
                     beginAtZero: true
                 }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: `Number of Citations at ${selectedLocation}`,
+                    font: {
+                        size:25  // Increase this value for larger text
+                    }
+                }
             }
         }
     });
 }
 
 
+
 // Call this function to populate the dropdown after defining it
 populatePredictionLocationDropdown();
 function calculatePrediction() {
-
-
-const selectedLocation = document.getElementById('predictionLocation').value;
+    const selectedLocation = document.getElementById('predictionLocation').value;
+    const selectedHour = parseInt(document.getElementById('predictionTime').value.split(':')[0], 10);
+    console.log(`Selected Location: ${selectedLocation}`);
+    console.log(`Selected Hour: ${selectedHour}`);
+    
     const citationDataByHour = prepareDataForGraph(selectedLocation);
 
     if (citationDataByHour.every(item => item === 0)) {
@@ -975,21 +961,19 @@ const selectedLocation = document.getElementById('predictionLocation').value;
     } else {
         plotGraph(citationDataByHour, selectedLocation);
     }
-	
-	
-    
-    var selectedHour = parseInt(document.getElementById('predictionTime').value.split(':')[0], 10);
-	selectedHour = selectedHour
-	
+
     const citationsAtLocation = allSightings.filter(sighting => sighting.college === selectedLocation);
+    console.log(`Total citations at ${selectedLocation}: ${citationsAtLocation.length}`);
+
     const citationsAtLocationAndTime = citationsAtLocation.filter(sighting => {
         const correctedDateStr = correctDateFormat(sighting.time_exact);
         const sightingTime = new Date(correctedDateStr);
+        sightingTime.setHours(sightingTime.getHours() + 7); // Offset time by 7 hours for calculation
+        console.log(`Adjusted Sighting Time: ${sightingTime}`);
         if (isNaN(sightingTime.getTime())) {
             console.log(`Invalid date detected: ${sighting.time_exact}, Citation #${sighting.citationNumber}`);
-            return false; // Ensure this returns false to not count in the hour-specific filter
+            return false;
         }
-        sightingTime.setHours(sightingTime.getHours()); // Adjust time by 5 hours
         return sightingTime.getHours() === selectedHour;
     });
 
@@ -997,12 +981,12 @@ const selectedLocation = document.getElementById('predictionLocation').value;
     const countCitationsAtLocationAndTime = citationsAtLocationAndTime.length;
     const percentChance = countCitationsAtLocation > 0 ? (countCitationsAtLocationAndTime / countCitationsAtLocation * 100).toFixed(2) : 0;
 
+    console.log(`Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}`);
+    console.log(`Your chances of getting a ticket are ${percentChance}%`);
 
-	
-    let resultsHtml = ``;
-	//let resultsHtml = `Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>`;
-    //resultsHtml += `Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}<br>`;
-    resultsHtml += ` <br> Your chances of getting a ticket are <b>${percentChance}%</b>`;
+    let resultsHtml = `Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>`;
+    resultsHtml += `Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}<br>`;
+    resultsHtml += ` <br><h1> Your chances of getting a ticket are <b>${percentChance}%</b></h1>`;
 
     if (citationsAtLocation.length > 0) {
         resultsHtml += "<ul>";
@@ -1010,10 +994,10 @@ const selectedLocation = document.getElementById('predictionLocation').value;
             const correctedDateStr = correctDateFormat(sighting.time_exact);
             const sightingTime = new Date(correctedDateStr);
             if (!isNaN(sightingTime.getTime())) {
-                sightingTime.setHours(sightingTime.getHours() + 7); // Adjust time
-                //resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - ${sightingTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</li>`;
+                sightingTime.setHours(sightingTime.getHours() + 7); // Offset time by 7 hours for display
+                resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - ${sightingTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</li>`;
             } else {
-                //resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - Invalid date format</li>`;
+                resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - Invalid date format</li>`;
             }
         });
         resultsHtml += "</ul>";
@@ -1022,23 +1006,20 @@ const selectedLocation = document.getElementById('predictionLocation').value;
     }
 
     document.getElementById('predictionResult').innerHTML = resultsHtml;
-	
-	
 }
 
 function correctDateFormat(dateStr) {
     let parts = dateStr.split('T');
     if (parts.length < 2) {
-        return dateStr; // Return original if split fails
+        return dateStr;
     }
     let dateParts = parts[0].split('-');
-    if (dateParts[1] > 12) { // This checks if the month part is greater than 12, indicating a swap might be needed
-        // Swap month and day if day appears in the month position
+    if (dateParts[1] > 12) {
         let temp = dateParts[1];
         dateParts[1] = dateParts[2];
         dateParts[2] = temp;
     }
-    dateParts = dateParts.map(part => part.padStart(2, '0')); // Zero-pad date parts
+    dateParts = dateParts.map(part => part.padStart(2, '0'));
     let correctedDateStr = `${dateParts.join('-')}T${parts[1]}`;
     return correctedDateStr;
 }
