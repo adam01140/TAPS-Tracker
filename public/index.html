@@ -16,119 +16,296 @@
     />
 	
 
-	
-	
-	
-	<style>
-	
-	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
 
-/* You might already have some of these styles, so integrate this with your existing CSS appropriately */
+<style>
 
-	#citationNumber, #collegeLocation {
-    border-radius: 40px; /* Rounded corners with a radius of 40px */
-    border: 2px solid #000000; /* Black border to match the rest of the form */
-    
+
+/* Make dropdown text bold */
+select option {
+    font-weight: bold;
+}
+
+/* Make placeholder text in textboxes bold */
+::placeholder {
+    font-weight: bold;
 }
 
 
 
-	#predictionTime, #timeOccurred {
-    font-size: 15px; /* Larger font size for better readability */
-    padding: 12px 20px; /* Increased padding for easier interaction */
-    background-color: #ffffff; /* Light blue background for consistency with the theme */
-    color: #333; /* Dark text for better contrast */
-    border: 2px solid #000000; /* Dark blue border */
-    border-radius: 40px; /* Rounded corners for a smoother look */
-    width: 60%; /* Full width to match other form elements */
-    box-sizing: border-box; /* Include padding and border in width calculation */
-    display: block; /* Ensure it takes up the full width of its container */
-    margin: 10px 0; /* Space above and below for separation from other elements */
-}
-
-#predictionLocation {
-    font-size: 18px; /* Match font size with other inputs */
-    padding: 12px 20px; /* Uniform padding */
-    background-color: #ffffff; /* A lighter shade of blue for the background */
-    color: #333; /* Dark text for contrast */
-    border: 2px solid #000000; /* Dark blue border to stand out */
-    border-radius: 40px; /* Rounded corners */
-    width: 60%; /* Ensure it's full-width */
-    box-sizing: border-box; /* Include padding and border in the width */
-    margin: 10px 0; /* Margin for spacing */
-}
+        /* Ensure both input and select elements are centered */
+        /* Ensure both input and select elements are centered */
 
 
-.predict-button {
-    font-size: 15px; /* Smaller font size */
-	padding: 12px 20px;
-}
+
+        /* Adjust input elements styling */
+        #predictionTime, #timeOccurred {
+            font-size: 40px; /* Larger font size for better readability */
+            padding: 20px; /* Increased padding for easier interaction */
+            background-color: #ffffff; /* Light blue background for consistency with the theme */
+            color: #6bc1fa; /* Dark text for better contrast */
+            border: 3px solid #000000; /* Dark blue border */
+            border-radius: 40px; /* Rounded corners for a smoother look */
+            width: 30%; /* Full width to match other form elements */
+            height: 50px;
+	font-weight: bold;
+            display: block; /* Ensure it takes up the full width of its container */
+            text-align: center; /* Center text horizontally */
+        }
+
+        /* Adjust prediction location styling */
+        #predictionLocation {
+
+		font-weight: bold;
+            font-size: 25px; /* Match font size with other inputs */
+            padding: 12px 20px; /* Uniform padding */
+            background-color: #ffffff; /* A lighter shade of blue for the background */
+            color: #333; /* Dark text for contrast */
+            height: 60px;
+			border: 3px solid #000000; /* Dark blue border to stand out */
+            border-radius: 40px; /* Rounded corners */
+            width: 50%; /* Ensure it's full-width */
+ 
+            text-align: center; /* Center text horizontally */
+            display: block;
+            
+        }
+
+        .predict-button {
+            font-size: 15px; /* Smaller font size */
+            padding: 10px;
+        }
+
         body, html {
             overflow-x: visible; /* Allow horizontal overflow */
         }
-        
-		#report2 {
-		
-		font-size: 18px; /* Match font size with other inputs */
-    padding: 12px 20px; /* Uniform padding */
-    background-color: #ffffff; /* A lighter shade of blue for the background */
-     /* Ensure it's full-width */
-    box-sizing: border-box; /* Include padding and border in the width */
-    margin: 10px 0; /* Margin for spacing */
-	
-	border: 5px solid lightblue;
-  width: 80%;
-  
-  border-radius: 40px;
-  
-}
-       
-		#timeOccurred {
-            font-size: 20px; /* Increased font size */
-            padding: 12px; /* Slightly larger padding */
-            width: calc(100% - 35px); /* Use viewport widths to ensure it's larger than the viewport */
-            box-sizing: border-box;
-            border: 2px solid #000000;
+
+        #report2 {
+            font-size: 18px; /* Match font size with other inputs */
+            padding: 12px 20px; /* Uniform padding */
+            background-color: #ffffff; /* A lighter shade of blue for the background */
+            /* Ensure it's full-width */
+            box-sizing: border-box; /* Include padding and border in the width */
+            margin: 10px 0; /* Margin for spacing */
+            border: 5px solid lightblue;
+            width: 80%;
             border-radius: 40px;
-            display: block; /* Ensure it's not inline */
-            margin: 0 auto; /* Center it within its container, though it will extend off-screen */
         }
 
-       @media (max-width: 1000px) {
-            #timeOccurred {
-            font-size: 20px; /* Increased font size */
+        #timeOccurred {
+            font-size: 35px; /* Increased font size */
             padding: 12px; /* Slightly larger padding */
-            width: 70vw; /* Use viewport widths to ensure it's larger than the viewport */
-			
+            width: calc(100% - 0px); /* Use viewport widths to ensure it's larger than the viewport */
             box-sizing: border-box;
-            border: 1px solid #000000;
+            border: 3px solid #000000;
             border-radius: 40px;
             display: block; /* Ensure it's not inline */
             margin: 0 auto; /* Center it within its container, though it will extend off-screen */
+            text-align: center; /* Center text horizontally */
+			margin-top: 20px;
         }
-        }
-		
-		
-		.item {
+
+        
+
+        .item {
             background-color: #f0f0f0; /* Light grey background */
+			text-align: center;
             border-radius: 40px; /* Rounded corners */
             padding: 10px; /* Some padding inside the div */
             margin-bottom: 10px; /* Margin at the bottom to separate each item */
             box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow for depth */
         }
+
+        input[type="text"], input[type="datetime-local"], input[type="time"], select {
+            background-color: #ffffff; /* White background */
+			color: #000000
+            border: 3px solid #000000; /* Black border */
+            text-align: center; /* Center text horizontally */
+        }
 		
 		
 		
-		input[type="text"], input[type="datetime-local"], input[type="time"], select {
-    background-color: #ffffff; /* White background */
-    border: 2px solid #000000; /* Black border */
-   
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/* Make dropdown text bold */
+select option {
+    font-weight: bold;
+}
+
+/* Make placeholder text in textboxes bold */
+::placeholder {
+    font-weight: bold;
+}
+
+/* Ensure both input and select elements are centered */
+#citationNumber {
+    color: #000000;
+    font-size: 40px; /* Increased font size */
+    border-radius: 40px; /* Rounded corners with a radius of 40px */
+    border: 3px solid #000000; /* Black border to match the rest of the form */
+    height: 60px;
+    text-align: center; /* Center text horizontally */
+    padding: 0; /* Remove default padding */
+    display: block;
+    margin: 10px auto; /* Center the element itself */
+    width: calc(100% - 20px); /* Ensure full width with some margin */
+    box-sizing: border-box;
+    -webkit-appearance: none; /* Ensure appearance is consistent across devices */
+    -moz-appearance: none;
+    appearance: none;
+    font-weight: bold; /* Make text bold */
 }
 
 
+
+#collegeLocation {
+    color: #000000;
+    font-size: 35px; /* Increased font size */
+    border-radius: 40px; /* Rounded corners with a radius of 40px */
+    border: 3px solid #000000; /* Black border to match the rest of the form */
+    height: 60px;
+    text-align: center; /* Center text horizontally */
+    padding: 10px; /* Remove default padding */
+    display: block;
+    margin: 10px auto; /* Center the element itself */
+    width: calc(100% - 20px); /* Ensure full width with some margin */
+    box-sizing: border-box;
+    -webkit-appearance: none; /* Ensure appearance is consistent across devices */
+    -moz-appearance: none;
+    appearance: none;
+    font-weight: bold; /* Make text bold */
+}
+
+
+/* Additional styles for the select element */
+#collegeLocation {
+    background-position: right 30px center; /* Adjust background position for dropdown arrow */
+    background-repeat: no-repeat; /* Prevent background repetition */
+    text-align-last: center; /* Center the text for the last line */
+}
+
+/* Ensure the option elements inherit the font-weight */
+#collegeLocation option {
+    font-weight: bold;
+}
+
+/* Styles for input elements */
+input[type="text"], input[type="datetime-local"], input[type="time"], select {
+    background-color: #ffffff; /* White background */
+    border: 3px solid #000000; /* Black border */
+    text-align: center; /* Center text horizontally */
+    font-size: 20px; /* Increased font size */
+    font-weight: bold; /* Make text bold */
+}
+
+/* Specific style for time inputs */
+input[type="time"] {
+    color: #89CFF0; /* Light blue text color */
+}
+
+/* Make placeholder text bold */
+::placeholder {
+    font-weight: bold;
+}
+
+/* Adjust submit button styling */
+#submitCitationButton {
+    font-size: 20px; /* Increased font size */
+    padding: 1px;
+}
+
+body {
+    /* Gradient background */
+    background: linear-gradient(135deg, #89CFF0, #4682B4);
+    /* Fallback color for browsers that don't support gradients */
+    background-color: #89CFF0;
+    /* Ensure the background covers the entire page */
+    min-height: 100vh;
+    /* Font settings for body text */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#predictionSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#wherewhen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Add some spacing between the select and input elements */
+}
+
+/* Media query for mobile devices */
+@media (max-width: 600px) {
+    select, input[type="text"], input[type="datetime-local"], input[type="time"] {
+        width: calc(100% - 40px); /* Adjust width for mobile devices */
+        font-size: 18px; /* Adjust font size for better readability */
+        height: 50px; /* Adjust height for better display */
+    }
+
+    #report2 {
+        width: 90%; /* Adjust width for mobile devices */
+    }
+
+    .predict-button {
+        font-size: 18px;
+    }
+}
+
+
+
+
+button {
+  margin-top: 0px;
+  height: 80px;
+
+  font-size: 16px;
+
+  cursor: pointer; /* Changes cursor to pointer when hovering over the button */
+  border: none; /* Removes border */
+  background-color: #007bff; /* Example button color, change as needed */
+  color: white; /* Text color */
+  border-radius: 40px; /* Adds rounded corners to the button */
+  width: 200px; /* Adjust width as needed */
+  display: block; /* Makes the button block level for width control */
+  margin: 0 auto; /* Centers the button */
+}
+
     </style>
-	
-	
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
@@ -142,7 +319,9 @@
   <body>
     <div class="header center">
       <div class="half_width">
-        
+	  <br>
+        <p> </P>
+		<br>
       </div>
     </div>
 
@@ -161,35 +340,31 @@
 
 			<center>
 			
-			<h2> Report a Sighting </h2>
+			<h1><b> Report a Citation </b></h1>
 			
 			<input type="text" id="citationNumber" placeholder="Citation Number">
 			<br>
-			<br>
-			<input type="datetime-local" id="timeOccurred" required>
-			<br>
+		
 		<select id="collegeLocation">
 		<option value="COLLEGE NINE" >COLLEGE NINE</option>
     </select>
-	<br><br>
+	<br>
+	<br>
+			<input type="datetime-local" id="timeOccurred" required>
+			<br>
+	<br>
 	<div id="map" class="map2" style="display: none;"></div>
-	<br>
-	<button id="submitCitationButton" onclick="submitCitation()">Submit Citation</button>
-
+	
+	<button id="submitCitationButton" onclick="submitCitation()"><h3>Submit Citation</h3></button>
 <br>
-	
-	
-	
-	<br>
+
 	<b>
    
     <input type="text" id="licensePlate" placeholder="License Plate (Optional)" style="display: none;">
  
 	</b>
    
-    
-	
-	<br>
+
 </div>
 
 
@@ -209,27 +384,29 @@
 <div class="map" id="predictionSection">
 
 <center>
-<br>
-  <h2>Where Should You Park</h2>
+
+  <h1><b>Will You Get A Ticket?</b></h1>
+
+  
+  
+  <br><br>
+  <p><b><h2> Enter where/when you parked: </b></p>
   
   <br>
-  
-  <p><b> Where you want to park: </b></p>
-  
   <br>
-  <select id="predictionLocation">
-    
-	
+  <center>
+
+  
+  <div id= "wherewhen" style="display:flex">
+  
+  <select id="predictionLocation" style="display:flex">
     <option value="112 CORE WEST STRUCTURE">112 CORE WEST STRUCTURE</option>
-   
   </select>
-  
-  <br>
-  <br>
-    <p><b> When you want parked: </b></p>
-	
-	<br>
+
   <input type="time" id="predictionTime" required>
+  </div>
+  <br>
+  <button class="predict-button" onclick="calculatePrediction()"><h2><b>View Results</b></h2><br><br><br></button>
   </h1></h2></h3>
 
 
@@ -237,11 +414,10 @@
 
 <div id="predictionResult" ></div>
 
-<br>
 
-<button class="predict-button" onclick="calculatePrediction()">View Results<br><br><br></button>
+
 <br>
-<canvas id="hourlyCitationChart" width="300" height="200"></canvas>
+<canvas id="hourlyCitationChart" width="500" height="300"></canvas>
 
 
 
@@ -285,8 +461,8 @@
 	<script>
 	
 	
-	var firebaseConfig = {
-    apiKey: "AIzaSyAgYdoZnSv5ekxngv_ue61aFZUGcRlphok",
+	const firebaseConfig = {
+  apiKey: "AIzaSyAgYdoZnSv5ekxngv_ue61aFZUGcRlphok",
   authDomain: "defundtaps.firebaseapp.com",
   projectId: "defundtaps",
   storageBucket: "defundtaps.appspot.com",
@@ -294,6 +470,7 @@
   appId: "1:456064481827:web:4a4b37035fbfbd534ccf96",
   measurementId: "G-4ZX480FN46"
 };
+
 firebase.initializeApp(firebaseConfig);
 
 async function init() {
@@ -569,35 +746,59 @@ function populateLocationDropdown() {
 
 // Call the function to populate the dropdown after defining it
 populateLocationDropdown();
+
+
+
+
+
+
+
 async function submitCitation() {
     const citationNumber = document.getElementById('citationNumber').value || "Unavailable";
     const licensePlate = document.getElementById('licensePlate').value || "Unavailable";
     const selectedCollegeName = document.getElementById('collegeLocation').value;
     const timeOccurredStr = document.getElementById('timeOccurred').value;
-    
+
+    // Create a new Date object from the input value
+    const date = new Date(timeOccurredStr);
+
+    // Adjust the date to account for the local time zone offset
+    const utcDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+
+    // Format the adjusted date to the desired format: "YYYY-MM-DDTHH:MM:00Z"
+    const formattedTimeOccurred = utcDate.toISOString().slice(0, 19) + 'Z';
+
     const postData = {
         citationNumber: citationNumber,
         licensePlate: licensePlate,
         locationOccurred: selectedCollegeName,
-        timeOccurred: timeOccurredStr, // Ensure your Heroku server can handle this format or convert as needed
+        timeOccurred: formattedTimeOccurred
     };
 
     try {
         const response = await fetch('https://taps-2-0.onrender.com/api/citations', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(postData),
+            body: JSON.stringify(postData)
         });
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        console.log("Citation submitted successfully!");
-        // Reset the form or provide further user feedback as necessary
+        console.log("Citation submitted successfully to Heroku!");
+
+        // Adding data to Firebase Firestore
+        await db.collection("user-reported-citations").add({
+            citationNumber: citationNumber,
+            college: selectedCollegeName,
+            time: formattedTimeOccurred
+        });
+        console.log("Citation submitted successfully to Firebase!");
     } catch (error) {
         console.error("Error submitting citation:", error);
     }
 }
+
 
 
 
@@ -801,7 +1002,7 @@ const selectedLocation = document.getElementById('predictionLocation').value;
     let resultsHtml = ``;
 	//let resultsHtml = `Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>`;
     //resultsHtml += `Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}<br>`;
-    resultsHtml += ` <br> Your chances of getting a ticket at that time are <b>${percentChance}%</b>`;
+    resultsHtml += ` <br> Your chances of getting a ticket are <b>${percentChance}%</b>`;
 
     if (citationsAtLocation.length > 0) {
         resultsHtml += "<ul>";
@@ -868,6 +1069,8 @@ var sightingMarkers = [];
 var showingAllSightings = false;
 
 
+
+
 function displaySightings() {
     const container = document.getElementById("sightingsContainer");
     container.innerHTML = ""; // Clear the container
@@ -898,7 +1101,7 @@ function displaySightings() {
         const ampm = hour >= 12 ? 'pm' : 'am';
         hour = hour % 12 || 12; // Convert 24h to 12h format and handle midnight
 
-        const formattedDate = `${day}/${month}/${year}`;
+        const formattedDate = `${month}/${day}/${year}`;
         const formattedTime = `${hour}:${minute < 10 ? '0' : ''}${minute}${ampm}`;
 
         div.innerHTML = `
@@ -920,7 +1123,7 @@ function displaySightings() {
             sightingMarkers.push(marker);
         }
     });
-calculatePrediction()
+    calculatePrediction();
     document.getElementById("toggleSightingsButton").textContent = showingAllSightings ? "Show Less" : "Show More";
 }
 
