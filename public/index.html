@@ -1,22 +1,13 @@
 <!DOCTYPE html>
+<!-- saved from url=(0027)https://defundtaps.web.app/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="./defundtaps.web.app_files/style.css">
 
-
-
-<html>
-  <head>
-    <link rel="stylesheet" href="style.css" />
-
-    <link
-      href="https://fonts.googleapis.com/css?family=Bellota Text"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Fugaz One"
-      rel="stylesheet"
-    />
+    <link href="./defundtaps.web.app_files/css" rel="stylesheet">
+    <link href="./defundtaps.web.app_files/css(1)" rel="stylesheet">
 	
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+	<link rel="stylesheet" href="./defundtaps.web.app_files/normalize.min.css">
 
 <style>
         /* Make dropdown text bold */
@@ -38,7 +29,7 @@
             border: 3px solid #000000; /* Dark blue border */
             border-radius: 40px; /* Rounded corners for a smoother look */
             width: 30%; /* Full width to match other form elements */
-            height: 50px;
+            height: 25px;
             font-weight: bold;
             display: block; /* Ensure it takes up the full width of its container */
             text-align: center; /* Center text horizontally */
@@ -124,7 +115,7 @@
         #citationNumber {
 		
             color: #000000; /* Black text color */
-            font-size: 40px; /* Increased font size */
+            font-size: 30px; /* Increased font size */
             border-radius: 40px; /* Rounded corners with a radius of 40px */
             border: 3px solid #000000; /* Black border to match the rest of the form */
             height: 60px;
@@ -141,6 +132,25 @@
         }
 
         #collegeLocation {
+            color: #000000;
+            font-size: 30px; /* Increased font size */
+            border-radius: 40px; /* Rounded corners with a radius of 40px */
+            border: 3px solid #000000; /* Black border to match the rest of the form */
+            height: 60px;
+            text-align: center; /* Center text horizontally */
+            padding: 10px; /* Remove default padding */
+            display: block;
+            margin: 10px auto; /* Center the element itself */
+            width: calc(100% - 20px); /* Ensure full width with some margin */
+            box-sizing: border-box;
+            -webkit-appearance: none; /* Ensure appearance is consistent across devices */
+            -moz-appearance: none;
+            appearance: none;
+            font-weight: bold; /* Make text bold */
+        }
+		
+		
+		#licensePlate {
             color: #000000;
             font-size: 30px; /* Increased font size */
             border-radius: 40px; /* Rounded corners with a radius of 40px */
@@ -227,11 +237,28 @@
         }
 
         /* Media query for mobile devices */
-        @media (max-width: 600px) {
+        @media (max-width: 1000px) {
+		
+		
+		#predictionTime, #timeOccurred {
+            font-size: 40px; /* Larger font size for better readability */
+            padding: 20px; /* Increased padding for easier interaction */
+            background-color: #ffffff; /* Light blue background for consistency with the theme */
+            color: #6bc1fa; /* Dark text for better contrast */
+            border: 3px solid #000000; /* Dark blue border */
+            border-radius: 40px; /* Rounded corners for a smoother look */
+            width: 30%; /* Full width to match other form elements */
+            height: 50px;
+            font-weight: bold;
+            display: block; /* Ensure it takes up the full width of its container */
+            text-align: center; /* Center text horizontally */
+        }
+		
+		
             select, input[type="text"], input[type="datetime-local"], input[type="time"] {
                 width: calc(100% - 40px); /* Adjust width for mobile devices */
                 font-size: 18px; /* Adjust font size for better readability */
-                height: 50px; /* Adjust height for better display */
+                height: 90px; /* Adjust height for better display */
             }
 
             #report2 {
@@ -239,7 +266,7 @@
             }
 
             .predict-button {
-				width: 30px;
+				width: 700px;
 				margin-top: 5px;
                 font-size: 20px;
 				font-weight: bold;
@@ -254,7 +281,7 @@
         }
 
         button {
-		
+			width: 70px;
             margin-top: 0px;
             height: 80px;
             font-size: 20px;
@@ -269,29 +296,26 @@
         }
 		
 		
-		
-		#citationNumber {
-    color: #000000 !important; /* Ensure the text color is black */
-}
+	
 
 
 
     </style>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+	<script src="./defundtaps.web.app_files/chart.js.download"></script>
+    <script src="./defundtaps.web.app_files/firebase-app-compat.js.download"></script>
+<script src="./defundtaps.web.app_files/firebase-auth-compat.js.download"></script>
+<script src="./defundtaps.web.app_files/firebase-firestore-compat.js.download"></script>
 	
 
     
 
-  </head>
+  <script type="text/javascript" charset="UTF-8" src="./defundtaps.web.app_files/common.js.download"></script><script type="text/javascript" charset="UTF-8" src="./defundtaps.web.app_files/util.js.download"></script><script type="text/javascript" charset="UTF-8" src="./defundtaps.web.app_files/map.js.download"></script></head>
 
   <body>
     <div class="header center">
       <div class="half_width">
 	  <br>
-        <p> </P>
+        <p> </p>
 		<br>
       </div>
     </div>
@@ -301,42 +325,43 @@
 		
         <div class="inner-content big">
       
-		  <img src="logo.JPG" width="250" height="200"  alt="logo taps ucsc tracker" />
+		  <img src="./defundtaps.web.app_files/logo.png" width="300" height="200" alt="logo taps ucsc tracker">
 			
 			
 			
-			<div id="report2" >
+			<div id="report2">
 			<center>
 			
 
 			<center>
 			
-			<h1><b> Report a Citation </b></h1>
+			<h1><b><u> Report a Citation</u> </b></h1>
+			<br>
+			<input type="text" id="licensePlate" placeholder="License Plate">
+ <br>
+			<input type="text" id="citationNumber" placeholder="Citation Number (optional)">
 			
-			<input type="text" id="citationNumber" placeholder="Citation Number">
-			<br>
-		
-		<select id="collegeLocation">
-		<option value="COLLEGE NINE" >COLLEGE NINE</option>
-    </select>
-	<br>
+		<select id="collegeLocation" style="display: none;">
+		<option value="COLLEGE NINE">COLLEGE NINE</option>
+    <option value="153 CROWN - MERRILL APARTMENTS">153 CROWN - MERRILL APARTMENTS</option><option value="154 CROWN - MERRILL APARTMENTS">154 CROWN - MERRILL APARTMENTS</option><option value="111B CROWN COLLEGE CIRCLE">111B CROWN COLLEGE CIRCLE</option><option value="111A CROWN COLLEGE CIRCLE">111A CROWN COLLEGE CIRCLE</option><option value="MERRILL COLLEGE APTS">MERRILL COLLEGE APTS</option><option value="CROWN SERVICE ROAD">CROWN SERVICE ROAD</option><option value="FARM CASFS">FARM CASFS</option><option value="168 AGROECOLOGY">168 AGROECOLOGY</option><option value="169 AGROECOLOGY">169 AGROECOLOGY</option><option value="170 HAY BARN">170 HAY BARN</option><option value="105 UNIVERSITY POLICE">105 UNIVERSITY POLICE</option><option value="116 CAMPUS FACILITIES">116 CAMPUS FACILITIES</option><option value="170 HAY BARN">170 HAY BARN</option><option value="Cowell Lot 106">Cowell Lot 106</option><option value="Cowell Lot 107">Cowell Lot 107</option><option value="Cowell Lot 108">Cowell Lot 108</option><option value="Cowell Circle">Cowell Circle</option><option value="Stevenson Lot 109">Stevenson Lot 109</option><option value="Stevenson Lot 110">Stevenson Lot 110</option><option value="Stevenson Circle">Stevenson Circle</option><option value="Gym Lot 103">Gym Lot 103</option><option value="East Remote">East Remote</option><option value="127 WEST REMOTE">127 WEST REMOTE</option><option value="The Village Lot 168">The Village Lot 168</option><option value="Baytree Bookstore Lot 102">Baytree Bookstore Lot 102</option><option value="McHenry Library Lot 101">McHenry Library Lot 101</option><option value="McHenry Library Lot 120">McHenry Library Lot 120</option><option value="126 PERFORMING ARTS">126 PERFORMING ARTS</option><option value="Merrill Lot 119">Merrill Lot 119</option><option value="Merrill Circle">Merrill Circle</option><option value="Porter Lot 124">Porter Lot 124</option><option value="Porter Lot 125">Porter Lot 125</option><option value="146 RACHEL CARSON COLLEGE">146 RACHEL CARSON COLLEGE</option><option value="Rachel Carson Lot 160">Rachel Carson Lot 160</option><option value="Rachel Carson Lot 161">Rachel Carson Lot 161</option><option value="Rachel Carson Lot 162">Rachel Carson Lot 162</option><option value="Family Housing Lot 129">Family Housing Lot 129</option><option value="Family Housing Lot 130">Family Housing Lot 130</option><option value="Family Housing Lot 131">Family Housing Lot 131</option><option value="Family Housing Lot 132">Family Housing Lot 132</option><option value="Family Housing Lot 133">Family Housing Lot 133</option><option value="Family Housing Lot 134">Family Housing Lot 134</option><option value="Family Housing Lot 135">Family Housing Lot 135</option><option value="Family Housing Lot 136">Family Housing Lot 136</option><option value="Kresge Lot 142">Kresge Lot 142</option><option value="Kresge Lot 143">Kresge Lot 143</option><option value="Kresge Lot 145">Kresge Lot 145</option><option value="Kresge Lot 147">Kresge Lot 147</option><option value="West Parking Garage">West Parking Garage</option><option value="West Charging Station">West Charging Station</option><option value="Jack Baskin Lot 157">Jack Baskin Lot 157</option><option value="Jack Baskin Lot 138">Jack Baskin Lot 138</option><option value="Thimann Lot 138">Thimann Lot 138</option><option value="Redwood Grove Lot 158">Redwood Grove Lot 158</option><option value="Redwood Grove Lot 159">Redwood Grove Lot 159</option><option value="Oakes Circle">Oakes Circle</option><option value="College 10 Lot 114">College 10 Lot 114</option><option value="164 JOHN R. LEWIS COLLEGE">164 JOHN R. LEWIS COLLEGE</option><option value="College 10 Lot 165">College 10 Lot 165</option><option value="College 10 Lot 165">College 10 Lot 165</option><option value="College 10 Lot 167">College 10 Lot 167</option><option value="College 9 Lot 166">College 9 Lot 166</option><option value="153 CROWN - MERRILL APARTMENTS">153 CROWN - MERRILL APARTMENTS</option><option value="154 CROWN - MERRILL APARTMENTS">154 CROWN - MERRILL APARTMENTS</option><option value="111B CROWN COLLEGE CIRCLE">111B CROWN COLLEGE CIRCLE</option><option value="111A CROWN COLLEGE CIRCLE">111A CROWN COLLEGE CIRCLE</option><option value="MERRILL COLLEGE APTS">MERRILL COLLEGE APTS</option><option value="CROWN SERVICE ROAD">CROWN SERVICE ROAD</option><option value="FARM CASFS">FARM CASFS</option><option value="168 AGROECOLOGY">168 AGROECOLOGY</option><option value="169 AGROECOLOGY">169 AGROECOLOGY</option><option value="170 HAY BARN">170 HAY BARN</option><option value="105 UNIVERSITY POLICE">105 UNIVERSITY POLICE</option><option value="116 CAMPUS FACILITIES">116 CAMPUS FACILITIES</option><option value="170 HAY BARN">170 HAY BARN</option><option value="Cowell Lot 106">Cowell Lot 106</option><option value="Cowell Lot 107">Cowell Lot 107</option><option value="Cowell Lot 108">Cowell Lot 108</option><option value="Cowell Circle">Cowell Circle</option><option value="Stevenson Lot 109">Stevenson Lot 109</option><option value="Stevenson Lot 110">Stevenson Lot 110</option><option value="Stevenson Circle">Stevenson Circle</option><option value="Gym Lot 103">Gym Lot 103</option><option value="East Remote">East Remote</option><option value="127 WEST REMOTE">127 WEST REMOTE</option><option value="The Village Lot 168">The Village Lot 168</option><option value="Baytree Bookstore Lot 102">Baytree Bookstore Lot 102</option><option value="McHenry Library Lot 101">McHenry Library Lot 101</option><option value="McHenry Library Lot 120">McHenry Library Lot 120</option><option value="126 PERFORMING ARTS">126 PERFORMING ARTS</option><option value="Merrill Lot 119">Merrill Lot 119</option><option value="Merrill Circle">Merrill Circle</option><option value="Porter Lot 124">Porter Lot 124</option><option value="Porter Lot 125">Porter Lot 125</option><option value="146 RACHEL CARSON COLLEGE">146 RACHEL CARSON COLLEGE</option><option value="Rachel Carson Lot 160">Rachel Carson Lot 160</option><option value="Rachel Carson Lot 161">Rachel Carson Lot 161</option><option value="Rachel Carson Lot 162">Rachel Carson Lot 162</option><option value="Family Housing Lot 129">Family Housing Lot 129</option><option value="Family Housing Lot 130">Family Housing Lot 130</option><option value="Family Housing Lot 131">Family Housing Lot 131</option><option value="Family Housing Lot 132">Family Housing Lot 132</option><option value="Family Housing Lot 133">Family Housing Lot 133</option><option value="Family Housing Lot 134">Family Housing Lot 134</option><option value="Family Housing Lot 135">Family Housing Lot 135</option><option value="Family Housing Lot 136">Family Housing Lot 136</option><option value="Kresge Lot 142">Kresge Lot 142</option><option value="Kresge Lot 143">Kresge Lot 143</option><option value="Kresge Lot 145">Kresge Lot 145</option><option value="Kresge Lot 147">Kresge Lot 147</option><option value="West Parking Garage">West Parking Garage</option><option value="West Charging Station">West Charging Station</option><option value="Jack Baskin Lot 157">Jack Baskin Lot 157</option><option value="Jack Baskin Lot 138">Jack Baskin Lot 138</option><option value="Thimann Lot 138">Thimann Lot 138</option><option value="Redwood Grove Lot 158">Redwood Grove Lot 158</option><option value="Redwood Grove Lot 159">Redwood Grove Lot 159</option><option value="Oakes Circle">Oakes Circle</option><option value="College 10 Lot 114">College 10 Lot 114</option><option value="164 JOHN R. LEWIS COLLEGE">164 JOHN R. LEWIS COLLEGE</option><option value="College 10 Lot 165">College 10 Lot 165</option><option value="College 10 Lot 165">College 10 Lot 165</option><option value="College 10 Lot 167">College 10 Lot 167</option><option value="College 9 Lot 166">College 9 Lot 166</option></select>
 	
-			<input type="datetime-local" id="timeOccurred" required>
+	
+			<input type="datetime-local" id="timeOccurred" style="display: none;">
 			<br>
-	<br>
-	<div id="map" class="map2" style="display: none;"></div>
+	
+	<div id="map" class="map2" style="display: none;"><div style="height: 100%; width: 100%;"><div style="overflow: hidden;"></div></div></div>
+	<h2>
 	
 	<button id="submitCitationButton" onclick="submitCitation()"><h3>Submit Citation</h3></button>
 <br>
 
 	<b>
    
-    <input type="text" id="licensePlate" placeholder="License Plate (Optional)" style="display: none;">
- 
+    
 	</b>
    
 
-</div>
+</h2></center></center></div>
 
 
 
@@ -355,36 +380,32 @@
 <div class="map" id="predictionSection">
 
 <center>
+<br>
+  <h1><b><u>Will You Get A Ticket?</u></b></h1>
 
-  <h1><b>Will You Get A Ticket?</b></h1>
+  
+  
 
-  
-  
- 
-  <p><b><h2> Enter where/when you parked: </b></p>
-  
   <br>
   <br>
   <center>
 
   
-  <div id= "wherewhen" style="display:flex">
+  <div id="wherewhen" style="display:flex">
   
-  <select id="predictionLocation" style="display:flex">
-    <option value="112 CORE WEST STRUCTURE">112 CORE WEST STRUCTURE</option>
-  </select>
+  <select id="predictionLocation" style="display:flex"><option value="COLLEGE NINE">COLLEGE NINE</option><option value="167 COLLEGE NINE">167 COLLEGE NINE</option><option value="103A EAST FIELD HOUSE">103A EAST FIELD HOUSE</option><option value="163 COWELL PROVOST">163 COWELL PROVOST</option><option value="107 COWELL - STEVENSON">107 COWELL - STEVENSON</option><option value="125 PORTER COLLEGE">125 PORTER COLLEGE</option><option value="124 PORTER COLLEGE">124 PORTER COLLEGE</option><option value="154 CROWN - MERRILL APARTMENTS">154 CROWN - MERRILL APARTMENTS</option><option value="152 CROWN - MERRILL APARTMENTS">152 CROWN - MERRILL APARTMENTS</option><option value="OAKES FIELD SERVICE ROAD">OAKES FIELD SERVICE ROAD</option><option value="150A NORTH PERIMETER">150A NORTH PERIMETER</option><option value="139B COMMUNICATIONS">139B COMMUNICATIONS</option><option value="113 THIMANN LAB">113 THIMANN LAB</option><option value="168 AGROECOLOGY">168 AGROECOLOGY</option><option value="120B UPPER MCHENRY LIBRARY - RESTRIC">120B UPPER MCHENRY LIBRARY - RESTRIC</option><option value="126 PERFORMING ARTS">126 PERFORMING ARTS</option><option value="108 STEVENSON SERVICE ROAD">108 STEVENSON SERVICE ROAD</option><option value="156 FIRE HOUSE">156 FIRE HOUSE</option><option value="111A CROWN COLLEGE PIT">111A CROWN COLLEGE PIT</option><option value="162 OAKES COLLEGE">162 OAKES COLLEGE</option><option value="111B CROWN COLLEGE CIRCLE">111B CROWN COLLEGE CIRCLE</option><option value="146 RACHEL CARSON COLLEGE">146 RACHEL CARSON COLLEGE</option><option value="139A ENGINEERING II">139A ENGINEERING II</option><option value="165 JOHN R. LEWIS COLLEGE">165 JOHN R. LEWIS COLLEGE</option><option value="109 STEVENSON COLLEGE">109 STEVENSON COLLEGE</option><option value="110 STEVENSON COLLEGE">110 STEVENSON COLLEGE</option><option value="158 REDWOOD GROVE APARTMENTS">158 REDWOOD GROVE APARTMENTS</option><option value="159 REDWOOD GROVE APARTMENTS">159 REDWOOD GROVE APARTMENTS</option><option value="120A LOWER MCHENRY LIBRARY">120A LOWER MCHENRY LIBRARY</option><option value="ACADEMIC RESOURCE CENTER">ACADEMIC RESOURCE CENTER</option><option value="112 CORE WEST STRUCTURE">112 CORE WEST STRUCTURE</option><option value="147 KRESGE COLLEGE">147 KRESGE COLLEGE</option><option value="STEINHART WAY">STEINHART WAY</option><option value="102 QUARRY PLAZA">102 QUARRY PLAZA</option><option value="FARM ROAD">FARM ROAD</option><option value="164 JOHN R. LEWIS COLLEGE">164 JOHN R. LEWIS COLLEGE</option><option value="166 COLLEGE NINE">166 COLLEGE NINE</option><option value="160 OAKES COLLEGE">160 OAKES COLLEGE</option><option value="119 MERRILL COLLEGE">119 MERRILL COLLEGE</option><option value="STEVENSON SERVICE ROAD">STEVENSON SERVICE ROAD</option><option value="140 FOUNDRY">140 FOUNDRY</option><option value="104 EAST REMOTE">104 EAST REMOTE</option><option value="128 HEALTH CENTER">128 HEALTH CENTER</option><option value="LOOKOUT">LOOKOUT</option><option value="205 C.S.C. - COASTAL BIOLOGY BLDG">205 C.S.C. - COASTAL BIOLOGY BLDG</option><option value="202 C.S.C. - SOUTH SERVICE AREA">202 C.S.C. - SOUTH SERVICE AREA</option><option value="301 2300 DELAWARE - SOUTH LOT">301 2300 DELAWARE - SOUTH LOT</option><option value="VILLAGE ROAD">VILLAGE ROAD</option><option value="COOLIDGE DRIVE">COOLIDGE DRIVE</option><option value="161 OAKES COLLEGE">161 OAKES COLLEGE</option><option value="127 WEST REMOTE">127 WEST REMOTE</option><option value="MERRILL COLLEGE">MERRILL COLLEGE</option><option value="138 BASKIN ENGINEERING">138 BASKIN ENGINEERING</option><option value="149 HELLER EXTENSION">149 HELLER EXTENSION</option><option value="116 CAMPUS FACILITIES">116 CAMPUS FACILITIES</option><option value="115 CARRIAGE HOUSE">115 CARRIAGE HOUSE</option><option value="PORTER COLLEGE">PORTER COLLEGE</option><option value="165 COLLEGE TEN">165 COLLEGE TEN</option><option value="KRESGE COLLEGE">KRESGE COLLEGE</option><option value="EARTH AND MARINE SCIENCES BUILDING">EARTH AND MARINE SCIENCES BUILDING</option><option value="101 HAHN STUDENT SERVICES">101 HAHN STUDENT SERVICES</option><option value="134 FAMILY STUDENT HOUSING - 600 LOO">134 FAMILY STUDENT HOUSING - 600 LOO</option><option value="131 FAMILY STUDENT HOUSING - 300 LOO">131 FAMILY STUDENT HOUSING - 300 LOO</option><option value="135 FAMILY STUDENT HOUSING - 700 LOO">135 FAMILY STUDENT HOUSING - 700 LOO</option><option value="FAMILY STUDENT HOUSING">FAMILY STUDENT HOUSING</option><option value="RED HILL ROAD">RED HILL ROAD</option><option value="106 COWELL COLLEGE">106 COWELL COLLEGE</option><option value="121 BIOMED - SCIENCE LIBRARY">121 BIOMED - SCIENCE LIBRARY</option><option value="BASKIN VISUAL ARTS">BASKIN VISUAL ARTS</option><option value="143 KRESGE COLLEGE">143 KRESGE COLLEGE</option><option value="150B NORTH PERIMETER">150B NORTH PERIMETER</option><option value="WEST FIELD HOUSE - RACHEL CARSON COL">WEST FIELD HOUSE - RACHEL CARSON COL</option><option value="141 KERR HALL">141 KERR HALL</option><option value="THEATER ARTS CENTER">THEATER ARTS CENTER</option><option value="133 FAMILY STUDENT HOUSING - 500 LOO">133 FAMILY STUDENT HOUSING - 500 LOO</option><option value="130 FAMILY STUDENT HOUSING - 200 LOO">130 FAMILY STUDENT HOUSING - 200 LOO</option><option value="136 FAMILY STUDENT HOUSING - 800 LOO">136 FAMILY STUDENT HOUSING - 800 LOO</option><option value="RACHEL CARSON COLLEGE">RACHEL CARSON COLLEGE</option><option value="FARM CASFS">FARM CASFS</option><option value="WEST SIDE RESEARCH PARK">WEST SIDE RESEARCH PARK</option><option value="169 THE VILLAGE">169 THE VILLAGE</option><option value="145 KRESGE COLLEGE">145 KRESGE COLLEGE</option><option value="OAKES COLLEGE">OAKES COLLEGE</option><option value="126  126 PERFORMING ARTS">126  126 PERFORMING ARTS</option><option value="HAGAR DRIVE">HAGAR DRIVE</option><option value="206 C.S.C. - SURGE PARKING">206 C.S.C. - SURGE PARKING</option><option value="CROWN SERVICE ROAD">CROWN SERVICE ROAD</option><option value="201 C.S.C. - SEYMOUR CENTER">201 C.S.C. - SEYMOUR CENTER</option><option value="155 CROWN - MERRILL APARTMENTS">155 CROWN - MERRILL APARTMENTS</option><option value="MERRILL COLLEGE APTS">MERRILL COLLEGE APTS</option><option value="170 HAY BARN">170 HAY BARN</option><option value="114 SOCIAL SCIENCES">114 SOCIAL SCIENCES</option><option value="COWELL COLLEGE">COWELL COLLEGE</option><option value="153 CROWN - MERRILL APARTMENTS">153 CROWN - MERRILL APARTMENTS</option><option value="CROWN APARTMENTS">CROWN APARTMENTS</option><option value="157 GRADUATE STUDENT APARTMENTS">157 GRADUATE STUDENT APARTMENTS</option><option value="150A NORTH PERIMITER">150A NORTH PERIMITER</option><option value="111A">111A</option><option value="114 JOHN R. LEWIS COLLEGE">114 JOHN R. LEWIS COLLEGE</option><option value="VILLAGE">VILLAGE</option><option value="THIMANN LABS">THIMANN LABS</option><option value="144 OAKES COLLEGE">144 OAKES COLLEGE</option><option value="COWELL COLLEGE INFILL APTS">COWELL COLLEGE INFILL APTS</option><option value="164 COLLEGE TEN">164 COLLEGE TEN</option><option value="203 C.S.C. - CENTER FOR OCEAN HEALTH">203 C.S.C. - CENTER FOR OCEAN HEALTH</option><option value="CROWN COLLEGE">CROWN COLLEGE</option><option value="LEONARDO LANE">LEONARDO LANE</option><option value="103B  OPERS - RESTRICTED">103B  OPERS - RESTRICTED</option><option value="150B NORTH PERIMITER">150B NORTH PERIMITER</option><option value="ENGINEERING LIBRARY">ENGINEERING LIBRARY</option></select>
 
-  <input type="time" id="predictionTime" required>
+  <input type="time" id="predictionTime" required="">
   </div>
   <br>
-   </h1></h2></h3>
+   
 
 
-<div id="predictionVariables" class="prediction-variables" ></div>
+<div id="predictionVariables" class="prediction-variables"></div>
 
-<div id="predictionResult" ></div>
+<div id="predictionResult"> <br><h1> Your chances of getting a ticket are <b>0.00%</b></h1><ul></ul></div>
 
-<canvas id="hourlyCitationChart" width="500" height="300"></canvas>
+<canvas id="hourlyCitationChart" width="1076" height="645" style="display: block; box-sizing: border-box; height: 516px; width: 861px;"></canvas>
 
 <button class="predict-button" onclick="calculatePrediction()"><h2><b>View Results</b></h2><br><br><br></button>
  
@@ -397,40 +418,70 @@
 
 
   
-</div>
+</center></center></div>
 
 
 
 
 
 
-<br><br>
+<br><br><br><br>
 
 
-<div class="map" >
+<div class="map">
 <br><br>
 <div id="map" class="map" style="display:none"></div>
 
 
-<h1><center> Recent Citations: </h1>
+<h1><center> Recent Citations: </center></h1>
 
 
 <!-- <div id="forecastMap" class="map"></div>	-->
 
 <center>
 <br>
-<button id="toggleSightingsButton" onclick="toggleSightingsDisplay()"> Show More</button>
+<button id="toggleSightingsButton" onclick="toggleSightingsDisplay()">Show More</button>
 <br>
 
 <center>	
-<div id="sightingsContainer"></div>
+<div id="sightingsContainer"><div class="item">
+            <center>
+            <div class="sighting-location">COLLEGE NINE</div>
+            <div>6/6/2024</div>
+            <div>11:47am</div>
+            <div>Citation #: Unavailable</div>
+        </center></div><div class="item">
+            <center>
+            <div class="sighting-location">COLLEGE NINE</div>
+            <div>9/9/2023</div>
+            <div>4:03pm</div>
+            <div>Citation #: 377128241</div>
+        </center></div><div class="item">
+            <center>
+            <div class="sighting-location">167 COLLEGE NINE</div>
+            <div>9/9/2023</div>
+            <div>3:58pm</div>
+            <div>Citation #: 377128240</div>
+        </center></div><div class="item">
+            <center>
+            <div class="sighting-location">103A EAST FIELD HOUSE</div>
+            <div>9/9/2023</div>
+            <div>3:38pm</div>
+            <div>Citation #: 377128238</div>
+        </center></div><div class="item">
+            <center>
+            <div class="sighting-location">103A EAST FIELD HOUSE</div>
+            <div>9/9/2023</div>
+            <div>3:36pm</div>
+            <div>Citation #: 377128237</div>
+        </center></div></div>
 <br>
-</div>
+</center></center></div>
 </div>
 </div>
 	
 	
-</div>
+
 
 	<script>
 	
@@ -725,56 +776,48 @@ populateLocationDropdown();
 
 
 
-
-
 async function submitCitation() {
-    const citationNumber = document.getElementById('citationNumber').value || "Unavailable";
-    const licensePlate = document.getElementById('licensePlate').value || "Unavailable";
-    const selectedCollegeName = document.getElementById('collegeLocation').value;
-    const timeOccurredStr = document.getElementById('timeOccurred').value;
+            const citationNumber = document.getElementById('citationNumber').value || "Unavailable";
+            const licensePlate = document.getElementById('licensePlate').value || "Unavailable";
+            const selectedCollegeName = document.getElementById('collegeLocation').value;
+            const timeOccurredStr = document.getElementById('timeOccurred').value;
 
-    // Create a new Date object from the input value
-    const date = new Date(timeOccurredStr);
+            const date = new Date(timeOccurredStr);
+            const utcDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+            const formattedTimeOccurred = utcDate.toISOString().slice(0, 19) + 'Z';
 
-    // Adjust the date to account for the local time zone offset
-    const utcDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+            const postData = {
+                citationNumber: citationNumber,
+                licensePlate: licensePlate,
+                locationOccurred: selectedCollegeName,
+                timeOccurred: formattedTimeOccurred
+            };
 
-    // Format the adjusted date to the desired format: "YYYY-MM-DDTHH:MM:00Z"
-    const formattedTimeOccurred = utcDate.toISOString().slice(0, 19) + 'Z';
+            try {
+                const response = await fetch('https://taps-2-0.onrender.com/api/citations', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(postData)
+                });
 
-    const postData = {
-        citationNumber: citationNumber,
-        licensePlate: licensePlate,
-        locationOccurred: selectedCollegeName,
-        timeOccurred: formattedTimeOccurred
-    };
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                console.log("Citation submitted successfully to Heroku!");
 
-    try {
-        const response = await fetch('https://taps-2-0.onrender.com/api/citations', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(postData)
-        });
+                await db.collection("user-reported-citations").add({
+                    citationNumber: citationNumber,
+                    //college: selectedCollegeName,
+                    //time: formattedTimeOccurred,
+                    licensePlate: licensePlate // Include the license plate info
+                });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+                alert("Citation submitted successfully");
+                console.log("Citation submitted successfully to Firebase!");
+            } catch (error) {
+                console.error("Error submitting citation:", error);
+            }
         }
-        console.log("Citation submitted successfully to Heroku!");
-
-        // Adding data to Firebase Firestore
-        await db.collection("user-reported-citations").add({
-            citationNumber: citationNumber,
-            college: selectedCollegeName,
-            time: formattedTimeOccurred
-        });
-        console.log("Citation submitted successfully to Firebase!");
-    } catch (error) {
-        console.error("Error submitting citation:", error);
-    }
-}
-
-
-
 
 function days_dropdown(){
 	
@@ -984,8 +1027,9 @@ function calculatePrediction() {
     console.log(`Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}`);
     console.log(`Your chances of getting a ticket are ${percentChance}%`);
 
-    let resultsHtml = `Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>`;
-    resultsHtml += `Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}<br>`;
+    let resultsHtml = ``;
+	//Total citations at ${selectedLocation}: ${countCitationsAtLocation}<br>`;
+    //resultsHtml += `Citations at ${selectedLocation} for the selected hour (${selectedHour}:00): ${countCitationsAtLocationAndTime}<br>`;
     resultsHtml += ` <br><h1> Your chances of getting a ticket are <b>${percentChance}%</b></h1>`;
 
     if (citationsAtLocation.length > 0) {
@@ -995,9 +1039,9 @@ function calculatePrediction() {
             const sightingTime = new Date(correctedDateStr);
             if (!isNaN(sightingTime.getTime())) {
                 sightingTime.setHours(sightingTime.getHours() + 7); // Offset time by 7 hours for display
-                resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - ${sightingTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</li>`;
+                //resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - ${sightingTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</li>`;
             } else {
-                resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - Invalid date format</li>`;
+                //resultsHtml += `<li>${sighting.college}: Citation #${sighting.citationNumber} - Invalid date format</li>`;
             }
         });
         resultsHtml += "</ul>";
@@ -1209,10 +1253,10 @@ fetchSightings();
 	
 	</script>
 	
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD27CKLddswkn-DTg6anVo8BaRWUZJrHao&callback=initMap" async defer></script>
+	<script src="./defundtaps.web.app_files/js" async="" defer=""></script>
 	
-  </body>
-</html>
+  
 
 
 
+</body></html>
