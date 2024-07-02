@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 import time
 
 # Set up the WebDriver
@@ -22,7 +23,7 @@ print("Opened base URL")
 for ticket_number in ticket_numbers:
     try:
         # Find the plate_vin input field and enter the plate number
-        plate_input = WebDriverWait(driver, 10).until(
+        plate_input = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.ID, "plate_vin"))
         )
         plate_input.clear()
@@ -30,7 +31,7 @@ for ticket_number in ticket_numbers:
         print(f"Entered plate number: {plate_number}")
 
         # Find the ticket_number input field and enter the ticket number
-        ticket_input = WebDriverWait(driver, 10).until(
+        ticket_input = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.ID, "ticket_number"))
         )
         ticket_input.clear()
@@ -38,18 +39,18 @@ for ticket_number in ticket_numbers:
         print(f"Entered ticket number: {ticket_number}")
 
         # Find and click the search button
-        search_button = WebDriverWait(driver, 10).until(
+        search_button = WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "search_ticket"))
         )
         driver.execute_script("arguments[0].click();", search_button)
         print(f"Clicked search button for ticket number: {ticket_number}")
 
         # Wait for the results to load
-        time.sleep(3)
+        time.sleep(1)
 
         # Check if the results page loaded by looking for a known element
         try:
-            ticket_info = WebDriverWait(driver, 10).until(
+            ticket_info = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.XPATH, "//h3[text()='Ticket Information']"))
             )
             issue_date_time = driver.find_element(By.XPATH, "//p[strong[text()='Issue Date and Time:']]").text
@@ -62,8 +63,10 @@ for ticket_number in ticket_numbers:
             print(f"Current Status: {current_status}")
             print(f"Location: {location}")
             print("-" * 40)
+        except TimeoutException:
+            print(f"Ticket number {ticket_number}: Doesn't exist")
         except Exception as e:
-            print(f"Ticket number {ticket_number} not found or error scraping data: {e}")
+            print(f"Error scraping data for ticket number {ticket_number}: {e}")
 
         # Go back to the base URL to search for the next ticket
         driver.get(base_url)
